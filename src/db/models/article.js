@@ -8,7 +8,7 @@ const articleSchema = new mongoose.Schema(
     desc: { type: String, required: true },
     article: { type: String, required: true },
     rate: { type: Number, default: 0 },
-    ownerId: { type: String, required: true },
+    ownerId: { type: String, ref: 'user', required: true },
     date: { type: Date, default: Date.now },
   },
   {
