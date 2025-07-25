@@ -2,6 +2,7 @@ import createHttpError from 'http-errors';
 import { getAllArticles, getArticleById } from '../services/articles.js';
 import { createArticle } from '../services/articles.js';
 import { deleteArticle } from '../services/articles.js';
+
 export const getArticlesController = async (req, res, next) => {
   try {
     const articles = await getAllArticles();

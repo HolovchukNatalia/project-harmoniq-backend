@@ -2,18 +2,6 @@ import mongoose from 'mongoose';
 
 const articleSchema = new mongoose.Schema(
   {
-<<<<<<< HEAD
-    img: { type: String, required: true },
-    title: { type: String, required: true },
-    desc: { type: String, required: true },
-    article: { type: String, required: true },
-    rate: { type: Number, default: 0 },
-    ownerId: { type: String, ref: 'user', required: true },
-    date: { type: Date, default: Date.now },
-  },
-  {
-    timestamps: true,
-=======
     img: {
       type: String,
       required: [true, 'Image URL is required'],
@@ -49,7 +37,6 @@ const articleSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
->>>>>>> 99f8eb9b1d7530e84871be25975907f62f07c6b9
   },
   { timestamps: true },
 );

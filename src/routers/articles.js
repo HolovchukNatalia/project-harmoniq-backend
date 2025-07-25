@@ -11,4 +11,5 @@ router.get('/articles', ctrlWrapper(getArticlesController));
 router.get('/articles/:articleId', ctrlWrapper(getArticleByIdController));
 router.post('/articles', ctrlWrapper(createArticleController));
 router.delete('/articles/:articleId', ctrlWrapper(deleteArticleController));
+
 export default router;
