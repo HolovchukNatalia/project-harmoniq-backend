@@ -7,13 +7,13 @@ import {
 } from '../controllers/articles.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
-import { articleShema } from '../validation/articleShema.js';
+import { articleSchema } from '../validation/articleShema.js';
 const router = Router();
 router.get('/articles', ctrlWrapper(getArticlesController));
 router.get('/articles/:articleId', ctrlWrapper(getArticleByIdController));
 router.post(
   '/articles',
-  validateBody(articleShema),
+  validateBody(articleSchema),
   ctrlWrapper(createArticleController),
 );
 router.delete('/articles/:articleId', ctrlWrapper(deleteArticleController));
