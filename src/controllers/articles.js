@@ -18,11 +18,11 @@ export const getArticleByIdController = async (req, res, next) => {
   const { articleId } = req.params;
   const article = await getArticleById(articleId);
   if (!article) {
-    throw createHttpError(404, 'Student not found');
+    throw createHttpError(404, `Article with id ${articleId} not found!`);
   }
   res.json({
     status: 200,
-    message: `Successfully found student with id ${articleId}!`,
+    message: `Successfully found article with id ${articleId}!`,
     data: article,
   });
 };
@@ -38,7 +38,7 @@ export const deleteArticleController = async (req, res, next) => {
   const { articleId } = req.params;
   const article = await deleteArticle(articleId);
   if (!article) {
-    next(createHttpError(404, 'Student not found'));
+    next(createHttpError(404, 'Bad request'));
     return;
   }
   res.status(204).send();
