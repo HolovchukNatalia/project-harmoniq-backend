@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema(
     name: { type: String, required: true },
     avatarUrl: { type: String, required: true },
     articlesAmount: { type: Number, default: 0 },
+    saved: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Article' }],
   },
   {
     timestamps: true,
