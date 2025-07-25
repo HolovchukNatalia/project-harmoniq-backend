@@ -3,8 +3,10 @@ import cors from 'cors';
 import pino from 'pino-http';
 import cookieParser from 'cookie-parser';
 import { getEnvVar } from './utils/getEvnVar.js';
+import articlesRoutes from './routers/articles.js';
 import authRoutes from './routers/authRoutes.js';
 import { errorHandler } from './middlewares/errorHandler.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
 const PORT = Number(getEnvVar('PORT', '3000'));
 
@@ -23,7 +25,6 @@ export function setupServer() {
   );
 
   app.use(cookieParser());
-
   app.use('/auth', authRoutes);
 
   app.get('/', (req, res) => {
@@ -31,8 +32,9 @@ export function setupServer() {
       message: 'Hello, friends!',
     });
   });
-
+  app.use(articlesRoutes);
   app.use(errorHandler);
+  app.use(notFoundHandler);
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

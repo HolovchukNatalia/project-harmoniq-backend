@@ -1,0 +1,45 @@
+import createHttpError from 'http-errors';
+import { getAllArticles, getArticleById } from '../services/articles.js';
+import { createArticle } from '../services/articles.js';
+import { deleteArticle } from '../services/articles.js';
+
+export const getArticlesController = async (req, res, next) => {
+  try {
+    const articles = await getAllArticles();
+    res.status(200).json({
+      data: articles,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getArticleByIdController = async (req, res, next) => {
+  const { articleId } = req.params;
+  const article = await getArticleById(articleId);
+  if (!article) {
+    throw createHttpError(404, 'Student not found');
+  }
+  res.json({
+    status: 200,
+    message: `Successfully found student with id ${articleId}!`,
+    data: article,
+  });
+};
+export const createArticleController = async (req, res) => {
+  const article = await createArticle(req.body);
+  res.status(201).json({
+    status: 201,
+    message: 'Successfuly created a article!',
+    data: article,
+  });
+};
+export const deleteArticleController = async (req, res, next) => {
+  const { articleId } = req.params;
+  const article = await deleteArticle(articleId);
+  if (!article) {
+    next(createHttpError(404, 'Student not found'));
+    return;
+  }
+  res.status(204).send();
+};
