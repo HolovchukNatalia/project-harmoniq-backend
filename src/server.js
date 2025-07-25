@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import pino from 'pino-http';
+import cookieParser from 'cookie-parser';
 import { getEnvVar } from './utils/getEvnVar.js';
 import authRoutes from './routers/authRoutes.js';
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -20,6 +21,8 @@ export function setupServer() {
       },
     }),
   );
+
+  app.use(cookieParser());
 
   app.use('/auth', authRoutes);
 
