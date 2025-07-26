@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema(
 
     avatarUrl: {
       type: String,
-      default: "",
+      default: '',
     },
 
     articlesAmount: {
