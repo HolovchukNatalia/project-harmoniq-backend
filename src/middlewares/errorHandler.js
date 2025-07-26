@@ -1,4 +1,4 @@
-const errorHandler = (err, req, res, next) => {
+export const errorHandler = (err, req, res, next) => {
   const statusCode = err.statusCode || err.status || 500;
   const status = statusCode >= 400 && statusCode < 500 ? 'fail' : 'error';
   const isDev = process.env.NODE_ENV === 'development';
