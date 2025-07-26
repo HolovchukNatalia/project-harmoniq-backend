@@ -20,4 +20,4 @@ router.post('/logout', logoutUserController);
 
 router.get('/me', protect, getCurrentUserController);
 
-export default route;
+export default router;
