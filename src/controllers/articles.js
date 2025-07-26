@@ -6,9 +6,7 @@ import { deleteArticle } from '../services/articles.js';
 export const getArticlesController = async (req, res, next) => {
   try {
     const articles = await getAllArticles();
-    res.status(200).json({
-      data: articles,
-    });
+    res.status(200).json(articles);
   } catch (err) {
     next(err);
   }
