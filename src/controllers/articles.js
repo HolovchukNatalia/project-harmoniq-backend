@@ -63,7 +63,9 @@ export const saveArticleToUser = async (req, res, next) => {
       await user.save();
     }
 
-    res.status(200).json({ message: 'Article successfully saved' });
+    res
+      .status(201)
+      .json({ status: 201, message: 'Article successfully saved' });
   } catch (err) {
     next(err);
   }
@@ -77,8 +79,13 @@ export const getSavedArticles = async (req, res, next) => {
     if (!user) {
       throw createHttpError(404, 'User not found');
     }
-
-    res.status(200).json({ data: user.saved });
+    if (!user.saved || user.saved.length === 0) {
+      res
+        .status(200)
+        .json({ message: 'User has no saved articles', data: user.saved });
+    } else {
+      res.status(200).json({ data: user.saved });
+    }
   } catch (err) {
     next(err);
   }
