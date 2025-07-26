@@ -3,6 +3,7 @@ import cors from 'cors';
 import pino from 'pino-http';
 import cookieParser from 'cookie-parser';
 import { getEnvVar } from './utils/getEvnVar.js';
+import articlesRoutes from './routers/articles.js';
 import authRoutes from './routers/authRoutes.js';
 import usersRoutes from './routers/usersRoutes.js';
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -25,15 +26,15 @@ export function setupServer() {
   );
 
   app.use(cookieParser());
+  app.use('/auth', authRoutes);
 
   app.get('/', (req, res) => {
     res.json({
       message: 'Hello, friends!',
     });
   });
-  app.use('/auth', authRoutes);
+  app.use(articlesRoutes);
   app.use('/users', usersRoutes);
-
   app.use(errorHandler);
   app.use(notFoundHandler);
 
