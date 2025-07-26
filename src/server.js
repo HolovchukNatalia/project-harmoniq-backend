@@ -26,15 +26,17 @@ export function setupServer() {
   );
 
   app.use(cookieParser());
-  app.use('/auth', authRoutes);
 
   app.get('/', (req, res) => {
     res.json({
       message: 'Hello, friends!',
     });
   });
-  app.use(articlesRoutes);
+
+  app.use('/auth', authRoutes);
   app.use('/users', usersRoutes);
+  app.use('/articles', articlesRoutes);
+
   app.use(errorHandler);
   app.use(notFoundHandler);
 

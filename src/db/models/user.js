@@ -28,7 +28,11 @@ const userSchema = new mongoose.Schema(
       minlength: [6, 'Password must be at least 6 characters'],
       maxlength: [64, 'Password cannot exceed 64 characters'],
     },
-
+    saved: {
+      default: [],
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'Artile',
+    },
     avatarUrl: {
       type: String,
       default: '',
