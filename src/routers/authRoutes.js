@@ -5,11 +5,13 @@ import { registerUserSchema } from '../validation/registerUserSchema.js';
 import { loginUserController } from '../controllers/loginUserController.js';
 import { logoutUserController } from '../controllers/logoutUserController.js';
 import { loginUserSchema } from '../validation/loginUserSchema.js';
+import { refreshSessionController } from '../controllers/refreshSessionController.js';
 
 const router = express.Router();
 
 router.post('/register', validateBody(registerUserSchema), registerUserController);
 router.post('/login',validateBody(loginUserSchema), loginUserController);
 router.post('/logout', logoutUserController);
+router.post('/refresh', refreshSessionController);
 
 export default router;
