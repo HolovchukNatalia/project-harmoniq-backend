@@ -22,6 +22,6 @@ router.post(
   ctrlWrapper(createArticleController),
 );
 router.delete('/articles/:articleId', ctrlWrapper(deleteArticleController));
-router.post('/users/:userId/save/:articleId', ctrlWrapper(saveArticleToUser));
+router.post('/users/:userId/saved/:articleId', ctrlWrapper(saveArticleToUser));
 router.get('/users/:userId/saved', ctrlWrapper(getSavedArticles));
 export default router;
