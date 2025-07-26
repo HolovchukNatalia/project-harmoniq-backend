@@ -54,6 +54,10 @@ export const saveArticleToUser = async (req, res, next) => {
       throw createHttpError(404, 'User not found');
     }
 
+    if (!Array.isArray(user.saved)) {
+      user.saved = [];
+    }
+
     if (!user.saved.includes(articleId)) {
       user.saved.push(articleId);
       await user.save();
