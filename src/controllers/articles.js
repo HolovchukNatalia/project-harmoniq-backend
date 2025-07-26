@@ -3,6 +3,7 @@ import { getAllArticles, getArticleById } from '../services/articles.js';
 import { createArticle } from '../services/articles.js';
 import { deleteArticle } from '../services/articles.js';
 import User from '../db/models/user.js';
+
 export const getArticlesController = async (req, res, next) => {
   try {
     const articles = await getAllArticles();
@@ -24,6 +25,7 @@ export const getArticleByIdController = async (req, res, next) => {
     article,
   });
 };
+
 export const createArticleController = async (req, res) => {
   const article = await createArticle(req.body);
   res.status(201).json({
@@ -32,6 +34,7 @@ export const createArticleController = async (req, res) => {
     data: article,
   });
 };
+
 export const deleteArticleController = async (req, res, next) => {
   const { articleId } = req.params;
   const article = await deleteArticle(articleId);

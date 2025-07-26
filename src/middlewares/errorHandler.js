@@ -1,4 +1,3 @@
-import { HttpError } from 'http-errors';
 export const errorHandler = (err, req, res, next) => {
   const statusCode = err.statusCode || err.status || 500;
   const status = statusCode >= 400 && statusCode < 500 ? 'fail' : 'error';

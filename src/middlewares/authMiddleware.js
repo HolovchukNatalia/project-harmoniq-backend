@@ -22,6 +22,6 @@ export const protect = async (req, res, next) => {
     req.user = user;
     next();
   } catch (err) {
-    next(new AppError('Invalid token', 401));
+    next(new AppError('Invalid token', 401, err.message));
   }
 };

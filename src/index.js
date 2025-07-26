@@ -6,7 +6,7 @@ const bootstrap = async () => {
     await initMongoDB();
     setupServer();
   } catch (err) {
-    console.error('❌ Error during app initialization:', err);
+    console.error('Error during app initialization:', err);
     process.exit(1);
   }
 };
