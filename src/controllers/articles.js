@@ -21,7 +21,7 @@ export const getArticleByIdController = async (req, res, next) => {
   res.json({
     status: 200,
     message: `Successfully found article with id ${articleId}!`,
-    data: article,
+    article,
   });
 };
 export const createArticleController = async (req, res) => {
