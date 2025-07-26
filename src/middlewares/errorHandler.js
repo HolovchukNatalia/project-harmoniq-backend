@@ -8,7 +8,7 @@ const errorHandler = (err, req, res, next) => {
     ? err.message
     : 'Something went wrong. Please try again later.';
 
-  console.error(`🔴 Error [${statusCode}]:`, err.message);
+  console.error(`Error [${statusCode}]:`, err.message);
   if (isDev) {
     console.error(err.stack);
   }
