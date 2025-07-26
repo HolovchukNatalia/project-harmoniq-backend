@@ -6,9 +6,7 @@ import User from '../db/models/user.js';
 export const getArticlesController = async (req, res, next) => {
   try {
     const articles = await getAllArticles();
-    res.status(200).json({
-      data: articles,
-    });
+    res.status(200).json(articles);
   } catch (err) {
     next(err);
   }
@@ -18,12 +16,12 @@ export const getArticleByIdController = async (req, res, next) => {
   const { articleId } = req.params;
   const article = await getArticleById(articleId);
   if (!article) {
-    throw createHttpError(404, 'Student not found');
+    throw createHttpError(404, `Article with id ${articleId} not found!`);
   }
   res.json({
     status: 200,
-    message: `Successfully found student with id ${articleId}!`,
-    data: article,
+    message: `Successfully found article with id ${articleId}!`,
+    article,
   });
 };
 export const createArticleController = async (req, res) => {
@@ -38,7 +36,7 @@ export const deleteArticleController = async (req, res, next) => {
   const { articleId } = req.params;
   const article = await deleteArticle(articleId);
   if (!article) {
-    next(createHttpError(404, 'Student not found'));
+    next(createHttpError(404, `Article with id ${articleId} not found!`));
     return;
   }
   res.status(204).send();

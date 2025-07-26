@@ -5,7 +5,7 @@ import User from "../db/models/user.js";
 import {Session} from "../db/models/session.js";
 
 
-const createSession = () => ({
+export const createSession = () => ({
     accessToken: crypto.randomBytes(30).toString('base64'),
         refreshToken: crypto.randomBytes(30).toString('base64'),
         accessTokenValidUntil: new Date(Date.now() + 1000 * 60 * 15),

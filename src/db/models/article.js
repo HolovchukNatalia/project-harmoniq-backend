@@ -10,13 +10,13 @@ const articleSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Title is required'],
       minlength: [5, 'Title too short (min 5 characters)'],
-      maxlength: [120, 'Title too long (max 120 characters)'],
+      maxlength: [100, 'Title too long (max 100 characters)'],
     },
     desc: {
       type: String,
       required: [true, 'Description is required'],
       minlength: [10, 'Description too short (min 10 characters)'],
-      maxlength: [250, 'Description too long (max 250 characters)'],
+      maxlength: [100, 'Description too long (max 100 characters)'],
     },
     article: {
       type: String,
