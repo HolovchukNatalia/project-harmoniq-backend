@@ -4,8 +4,6 @@ import {
   getArticleByIdController,
   createArticleController,
   deleteArticleController,
-  saveArticleToUser,
-  getSavedArticles,
 } from '../controllers/articles.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
@@ -22,6 +20,5 @@ router.post(
   ctrlWrapper(createArticleController),
 );
 router.delete('/articles/:articleId', ctrlWrapper(deleteArticleController));
-router.post('/users/:userId/saved/:articleId', ctrlWrapper(saveArticleToUser));
-router.get('/users/:userId/saved', ctrlWrapper(getSavedArticles));
+
 export default router;

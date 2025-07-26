@@ -4,6 +4,7 @@ import pino from 'pino-http';
 import cookieParser from 'cookie-parser';
 import { getEnvVar } from './utils/getEvnVar.js';
 import authRoutes from './routers/authRoutes.js';
+import usersRoutes from './routers/usersRoutes.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
@@ -31,6 +32,7 @@ export function setupServer() {
     });
   });
   app.use('/auth', authRoutes);
+  app.use('/users', usersRoutes);
 
   app.use(errorHandler);
   app.use(notFoundHandler);
