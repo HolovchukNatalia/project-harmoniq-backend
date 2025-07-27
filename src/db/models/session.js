@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 const SessionSchema = new Schema({
   userId: {
@@ -25,4 +25,4 @@ const SessionSchema = new Schema({
   },
 });
 
-export const Session = model('Session', SessionSchema);
+export default mongoose.model('Session', SessionSchema);
