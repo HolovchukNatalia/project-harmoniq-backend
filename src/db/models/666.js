@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema(
     saved: {
       default: [],
       type: [mongoose.Schema.Types.ObjectId],
-      ref: 'article',
+      ref: 'Article',
     },
     avatarUrl: {
       type: String,

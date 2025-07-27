@@ -30,7 +30,7 @@ const ArticleSchema = new mongoose.Schema(
     },
     ownerId: {
       type: mongoose.Types.ObjectId,
-      ref: 'user',
+      ref: 'User',
       required: [true, 'Author ID is required'],
     },
     date: {
