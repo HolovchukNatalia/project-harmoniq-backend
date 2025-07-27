@@ -11,14 +11,23 @@ import { authenticate } from '../middlewares/authenticate.js';
 import { articleSchema } from '../validation/articleShema.js';
 
 const router = Router();
-router.use('/', authenticate);
+
+// Публічні маршрути
 router.get('/', ctrlWrapper(getArticlesController));
 router.get('/:articleId', ctrlWrapper(getArticleByIdController));
+
+// Приватні маршрути
 router.post(
   '/',
+  authenticate,
   validateBody(articleSchema),
   ctrlWrapper(createArticleController),
 );
-router.delete('/:articleId', ctrlWrapper(deleteArticleController));
+
+router.delete(
+  '/:articleId',
+  authenticate,
+  ctrlWrapper(deleteArticleController),
+);
 
 export default router;
