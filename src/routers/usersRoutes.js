@@ -1,13 +1,16 @@
 import { Router } from 'express';
-import {
-  getSavedArticles,
-  saveArticleToUser,
-} from '../controllers/articles.js';
+
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import { userInfoController } from '../controllers/userInfoController.js';
+import {
+  allUsersInfoController,
+  saveArticleToUser,
+  userInfoController,
+} from '../controllers/userInfoController.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
 const router = Router();
-router.post('/:userId/saved/:articleId', ctrlWrapper(saveArticleToUser));
-router.get('/:userId/saved', ctrlWrapper(getSavedArticles));
+router.use('/', authenticate);
+router.post('/:userId/save/:articleId', ctrlWrapper(saveArticleToUser));
 router.get('/:userId/', ctrlWrapper(userInfoController));
+router.get('/', ctrlWrapper(allUsersInfoController));
 export default router;

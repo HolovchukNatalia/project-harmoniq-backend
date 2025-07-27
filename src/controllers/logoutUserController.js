@@ -1,12 +1,18 @@
-import { logoutUser } from "../services/logoutUserService.js";
+import { logoutUser } from '../services/logoutUserService.js';
 
 export const logoutUserController = async (req, res) => {
-    const { sessionId, sessionToken } = req.cookies;
-    await logoutUser(sessionId, sessionToken);
+  const { sessionId, sessionToken } = req.cookies;
 
-    res.clearCookie('sessionToken');
-    res.clearCookie('sessionId');
+  const isLoggedOut = await logoutUser(sessionId, sessionToken);
 
-    res.status(204).send();
+  res.clearCookie('sessionToken');
+  res.clearCookie('sessionId');
 
+  if (!isLoggedOut) {
+    return res
+      .status(401)
+      .json({ message: 'Invalid session or already logged out' });
+  }
+
+  res.status(204).send();
 };

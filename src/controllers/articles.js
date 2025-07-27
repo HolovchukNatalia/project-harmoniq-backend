@@ -2,7 +2,6 @@ import createHttpError from 'http-errors';
 import { getAllArticles, getArticleById } from '../services/articles.js';
 import { createArticle } from '../services/articles.js';
 import { deleteArticle } from '../services/articles.js';
-import User from '../db/models/user.js';
 
 export const getArticlesController = async (req, res, next) => {
   try {
@@ -43,50 +42,4 @@ export const deleteArticleController = async (req, res, next) => {
     return;
   }
   res.status(204).send();
-};
-
-export const saveArticleToUser = async (req, res, next) => {
-  const { userId, articleId } = req.params;
-
-  try {
-    const user = await User.findById(userId);
-    if (!user) {
-      throw createHttpError(404, 'User not found');
-    }
-
-    if (!Array.isArray(user.saved)) {
-      user.saved = [];
-    }
-
-    if (!user.saved.includes(articleId)) {
-      user.saved.push(articleId);
-      await user.save();
-    }
-
-    res
-      .status(201)
-      .json({ status: 201, message: 'Article successfully saved' });
-  } catch (err) {
-    next(err);
-  }
-};
-
-export const getSavedArticles = async (req, res, next) => {
-  const { userId } = req.params;
-
-  try {
-    const user = await User.findById(userId).populate('saved');
-    if (!user) {
-      throw createHttpError(404, 'User not found');
-    }
-    if (!user.saved || user.saved.length === 0) {
-      res
-        .status(200)
-        .json({ message: 'User has no saved articles', data: user.saved });
-    } else {
-      res.status(200).json({ data: user.saved });
-    }
-  } catch (err) {
-    next(err);
-  }
 };

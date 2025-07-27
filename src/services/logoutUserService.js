@@ -1,8 +1,10 @@
-import { Session } from "../db/models/session.js";
+import { Session } from '../db/models/session.js';
 
 export const logoutUser = async (sessionId, sessionToken) => {
-    await Session.findOneAndDelete({
-        _id: sessionId,
-        refreshToken: sessionToken,
-    });
+  const deletedSession = await Session.findOneAndDelete({
+    _id: sessionId,
+    refreshToken: sessionToken,
+  });
+
+  return Boolean(deletedSession);
 };
