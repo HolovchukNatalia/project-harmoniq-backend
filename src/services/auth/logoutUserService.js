@@ -1,4 +1,4 @@
-import { Session } from '../../db/models/session.js';
+import Session from '../../db/models/session.js';
 
 export const logoutUser = async (sessionId, sessionToken) => {
   const deletedSession = await Session.findOneAndDelete({
