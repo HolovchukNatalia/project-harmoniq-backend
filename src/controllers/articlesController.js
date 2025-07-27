@@ -32,7 +32,7 @@ export const createArticleController = async (req, res) => {
   const article = await createArticle(req.body);
   res.status(201).json({
     status: 201,
-    message: 'Successfuly created a article!',
+    message: 'Successfully created an article!',
     data: article,
   });
 };
