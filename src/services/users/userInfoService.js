@@ -1,5 +1,5 @@
 import createHttpError from 'http-errors';
-import User from '../db/models/user.js';
+import User from '../../db/models/User.js';
 import mongoose from 'mongoose';
 
 export const userInfoService = async (id) => {

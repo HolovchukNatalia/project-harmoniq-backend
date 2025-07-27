@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt';
-
-import { registerUserService } from '../services/registerUserService.js';
+import { registerUserService } from '../services/auth/registerUserService.js';
 
 const registerUserController = async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -18,7 +17,7 @@ const registerUserController = async (req, res, next) => {
   }
 
   res.status(201).json({
-    status: 'success',
+    status: 201,
     message: 'Successfully registered a user!',
     data: {
       id: user._id,

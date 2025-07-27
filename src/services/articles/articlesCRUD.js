@@ -1,5 +1,5 @@
-import Article from '../db/models/article.js';
 import mongoose from 'mongoose';
+import Article from '../../db/models/Article.js';
 export const getAllArticles = async () => {
   const articles = await Article.find();
   return articles;

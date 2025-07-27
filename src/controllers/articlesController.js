@@ -1,15 +1,18 @@
 import createHttpError from 'http-errors';
-import { getAllArticles, getArticleById } from '../services/articles.js';
-import { createArticle } from '../services/articles.js';
-import { deleteArticle } from '../services/articles.js';
+import {
+  createArticle,
+  deleteArticle,
+  getAllArticles,
+  getArticleById,
+} from '../services/articles/articlesCRUD.js';
 
 export const getArticlesController = async (req, res, next) => {
-  try {
-    const articles = await getAllArticles();
-    res.status(200).json(articles);
-  } catch (err) {
-    next(err);
-  }
+  const articles = await getAllArticles();
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully retrieved articles',
+    articles,
+  });
 };
 
 export const getArticleByIdController = async (req, res, next) => {

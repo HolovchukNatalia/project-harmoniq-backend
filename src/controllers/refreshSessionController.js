@@ -1,4 +1,4 @@
-import { refreshSession } from '../services/refreshSession.js';
+import { refreshSession } from '../services/auth/refreshSession.js';
 
 export const refreshSessionController = async (req, res) => {
   const { sessionId, sessionToken } = req.cookies;

@@ -1,7 +1,7 @@
-import { allUsersInfoService } from '../services/allUsersInfoService.js';
-import { getUserArticlesServise } from '../services/getUserArticlesServise.js';
-import { saveArticleToUserServise } from '../services/saveArticleToUserServise.js';
-import { userInfoService } from '../services/userInfoService.js';
+import { allUsersInfoService } from '../services/users/allUsersInfoService.js';
+import { getUserArticlesServise } from '../services/users/getUserArticlesServise.js';
+import { saveArticleToUserServise } from '../services/users/saveArticleToUserServise.js';
+import { userInfoService } from '../services/users/userInfoService.js';
 
 export const userInfoController = async (req, res, next) => {
   const { userId } = req.params;
@@ -30,7 +30,7 @@ export const allUsersInfoController = async (req, res, next) => {
   const users = await allUsersInfoService();
   res.status(200).json({
     status: 200,
-    message: 'Successful',
+    message: 'Users retrieved successfully',
     users,
   });
 };

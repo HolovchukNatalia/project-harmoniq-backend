@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const articleSchema = new mongoose.Schema(
+const ArticleSchema = new mongoose.Schema(
   {
     img: {
       type: String,
@@ -41,4 +41,4 @@ const articleSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-export default mongoose.model('article', articleSchema);
+export default mongoose.model('Article', ArticleSchema);

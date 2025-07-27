@@ -1,6 +1,6 @@
 import createHttpError from 'http-errors';
-import { Session } from '../db/models/session.js';
-import { generateSessionTokens } from './loginUserService.js';
+import { Session } from '../../db/models/Session.js';
+import { generateSessionTokens } from '../../utils/generateSessionTokens.js';
 
 export const refreshSession = async (sessionId, sessionToken) => {
   const session = await Session.findOne({
