@@ -3,11 +3,9 @@ export const sortArticles = (data, sortMethod) => {
     return data;
   }
 
-  let sortedData = [...data];
-
   if (sortMethod === 'popular') {
-    sortedData.sort((a, b) => b.rate - a.rate);
+    return data.toSorted((a, b) => b.rate - a.rate);
   }
 
-  return sortedData;
+  return data;
 };
