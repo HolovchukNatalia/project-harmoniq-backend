@@ -1,10 +1,10 @@
 import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
 
-import User from '../../db/models/666.js';
+import User from '../../db/models/user.js';
 
 import { generateSessionTokens } from '../../utils/generateSessionTokens.js';
-import { Session } from '../../db/models/123.js';
+import { Session } from '../../db/models/session.js';
 
 export const loginUser = async (payload) => {
   const user = await User.findOne({ email: payload.email });
