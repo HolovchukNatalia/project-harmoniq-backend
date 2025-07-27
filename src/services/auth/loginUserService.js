@@ -16,7 +16,6 @@ export const loginUser = async (payload) => {
     payload.password,
     user.password,
   );
-
   if (!arePasswordEqual) {
     throw createHttpError(401, 'User or password doesn`t match');
   }
@@ -28,5 +27,5 @@ export const loginUser = async (payload) => {
     userId: user._id,
   });
 
-  return session;
+  return { session, user };
 };
