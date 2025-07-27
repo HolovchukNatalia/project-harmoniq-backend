@@ -2,19 +2,19 @@ import { refreshSession } from '../services/auth/refreshSession.js';
 
 export const refreshSessionController = async (req, res) => {
   const { sessionId, sessionToken } = req.cookies;
-
   const { session, user } = await refreshSession(sessionId, sessionToken);
-
   res.cookie('sessionId', session.id, {
     httpOnly: true,
     expires: session.refreshTokenValidUntil,
-    sameSite: 'lax',
+    sameSite: 'none',
+    secure: true,
   });
 
   res.cookie('sessionToken', session.refreshToken, {
     httpOnly: true,
     expires: session.refreshTokenValidUntil,
-    sameSite: 'lax',
+    sameSite: 'none',
+    secure: true,
   });
 
   res.json({
