@@ -1,0 +1,30 @@
+tags:
+  - Articles
+summary: Get a whole list of articles
+operationId: getAllArticles
+description: 'Get list of all articles with this endpoint'
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    description: 'Successfully retrieved articles'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - articles
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully retrieved articles
+            articles:
+              type: array
+              $ref: ../../components/schemas/article.yaml
+  '401':
+    $ref: '../../components/responses/401.yaml'

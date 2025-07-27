@@ -1,0 +1,28 @@
+description: Validation error
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+        - data
+      properties:
+        status:
+          type: integer
+          example: 401
+        message:
+          type: string
+          example: Validation Error
+        data:
+          type: object
+          required:
+            - field
+            - message
+          properties:
+            field:
+              type: string
+              example: 'date'
+            message:
+              type: string
+              example: 'Date is required'

@@ -1,0 +1,29 @@
+tags:
+  - Users
+summary: Save an article for a user by Ids
+operationId: saveArticleToUserServise
+description: Delete an article for a user by Ids
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: userId
+    required: true
+    schema:
+      type: string
+      example: '6885f9804c4583960e7188e7'
+  - in: path
+    name: articleId
+    required: true
+    schema:
+      type: string
+      example: '68855dd9f76d12b4e738416a'
+responses:
+  '201':
+    description: 'Article successfully saved'
+  '401':
+    $ref: '../../../../components/responses/401.yaml'
+  '403':
+    $ref: '../../../../components/responses/403.yaml'
+  '404':
+    $ref: '../../../../components/responses/404.yaml'

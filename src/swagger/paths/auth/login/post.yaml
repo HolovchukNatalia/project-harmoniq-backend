@@ -1,0 +1,54 @@
+tags:
+  - Authorization
+summary: User Login
+operationId: loginUser
+description: 'Log in a user with email and password'
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            description: "User's email"
+            type: string
+            example: 'user@example.com'
+          password:
+            description: "User's password"
+            type: string
+            format: password
+            example: 'password123'
+responses:
+  '200':
+    description: 'Successfully logged in an user!'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully logged in an user!'
+            data:
+              type: object
+              required:
+                - accessToken
+              properties:
+                accessToken:
+                  type: string
+                  example: 'Bearer token_string'
+  '401':
+    $ref: '../../../components/responses/401.yaml'

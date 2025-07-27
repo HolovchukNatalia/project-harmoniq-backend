@@ -1,0 +1,44 @@
+tags:
+  - Users
+summary: Get a single user by id
+operationId: userInfoService
+description: 'Get a user by id'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: userId
+    required: true
+    schema:
+      type: string
+      example: '68855485f76d12b4e7384005'
+responses:
+  '200':
+    description: 'User with 68855485f76d12b4e7384005 successfully found'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - user
+            - userArticles
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'User with 68855485f76d12b4e7384005 successfully found'
+            user:
+              type: object
+              $ref: '../../../components/schemas/user.yaml'
+            userArticles:
+              description: 'How much and what articles have been created by the user'
+              type: array
+              $ref: '../../../components/schemas/article.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'

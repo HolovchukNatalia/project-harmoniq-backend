@@ -1,0 +1,43 @@
+type: object
+required:
+  - _id
+  - img
+  - title
+  - desc
+  - article
+  - rate
+  - date
+  - ownerId
+properties:
+  _id:
+    description: "Article's id"
+    type: string
+    example: '68855dd9f76d12b4e738412e'
+  img:
+    description: "Article's image"
+    type: string
+    example: 'https://ftp.goit.study/img/harmoniq/f12e886489f94b5886d03e95vn.jpg'
+  title:
+    description: "Article's title"
+    type: string
+    example: 'Коли тривога заповнює простір: шлях до спокою'
+  desc:
+    description: "Article's description"
+    type: string
+    example: 'Медитації, які допомагають відновити внутрішній спокій'
+  article:
+    description: "Main Article's part"
+    type: string
+    example: 'У кожного з нас бувають моменти, коли тривога наче туман огортає думки, не даючи побачити ясне небо. Це відчуття ніби нескінченний внутрішній шум, який здається нестерпним і безвихідним. Однак саме у такі миті ми особливо гостро потребуємо заземлення, повернення до себе і пошуку свого внутрішнього центру. Ця стаття — про те, як упізнати тривогу і почати рухатися до спокою через прості, але ефективні практики. Тривога — це...'
+  rate:
+    description: "Article's rating"
+    type: number
+    example: 16
+  date:
+    description: "Article's publishing date"
+    type: string
+    example: '2025-03-27T00:00:00.000Z'
+  ownerId:
+    description: "Article owner's id"
+    type: string
+    example: '68855485f76d12b4e7384005'

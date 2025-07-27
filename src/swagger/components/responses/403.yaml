@@ -1,0 +1,15 @@
+description: Forbidden
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: integer
+          example: 403
+        message:
+          type: string
+          example: 'You are not allowed to save article to another user'
