@@ -16,7 +16,7 @@ export const userInfoController = async (req, res, next) => {
   });
 };
 
-export const saveArticleToUser = async (req, res, next) => {
+export const saveArticleToUserController = async (req, res, next) => {
   const { userId, articleId } = req.params;
 
   await saveArticleToUserServise(userId, articleId);

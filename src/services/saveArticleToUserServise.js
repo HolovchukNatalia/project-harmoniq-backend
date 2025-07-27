@@ -3,7 +3,7 @@ import createHttpError from 'http-errors';
 
 export const saveArticleToUserServise = async (userId, articleId) => {
   const user = await User.findById(userId);
-  console.log('user:', user);
+
   if (!user) {
     throw createHttpError(404, 'User not found');
   }

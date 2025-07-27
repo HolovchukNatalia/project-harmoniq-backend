@@ -7,7 +7,6 @@ export const getAllArticles = async () => {
 
 export const getArticleById = async (articleId) => {
   const article = await Article.findOne({ _id: articleId });
-  console.log('Found article:', article);
   return article;
 };
 

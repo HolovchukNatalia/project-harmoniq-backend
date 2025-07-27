@@ -4,7 +4,7 @@ import {
   getArticleByIdController,
   createArticleController,
   deleteArticleController,
-} from '../controllers/articles.js';
+} from '../controllers/articlesController.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { articleSchema } from '../validation/articleShema.js';
