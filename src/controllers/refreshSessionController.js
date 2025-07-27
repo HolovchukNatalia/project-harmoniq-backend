@@ -8,6 +8,7 @@ export const refreshSessionController = async (req, res) => {
     expires: session.refreshTokenValidUntil,
     sameSite: 'none',
     secure: true,
+    path: '/',
   });
 
   res.cookie('sessionToken', session.refreshToken, {
@@ -15,6 +16,7 @@ export const refreshSessionController = async (req, res) => {
     expires: session.refreshTokenValidUntil,
     sameSite: 'none',
     secure: true,
+    path: '/',
   });
 
   res.json({

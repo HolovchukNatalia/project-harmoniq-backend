@@ -5,8 +5,16 @@ export const logoutUserController = async (req, res) => {
 
   const isLoggedOut = await logoutUser(sessionId, sessionToken);
 
-  res.clearCookie('sessionToken');
-  res.clearCookie('sessionId');
+  res.clearCookie('sessionToken', {
+    path: '/',
+    sameSite: 'none',
+    secure: true,
+  });
+  res.clearCookie('sessionId', {
+    path: '/',
+    sameSite: 'none',
+    secure: true,
+  });
 
   if (!isLoggedOut) {
     return res.status(401).json({
