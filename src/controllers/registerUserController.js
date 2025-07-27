@@ -1,8 +1,7 @@
 import bcrypt from 'bcrypt';
-import { AppError, catchAsync } from '../utils/errorUtils.js';
-import { registerUserService } from '../services/registerUserService.js';
+import { registerUserService } from '../services/auth/registerUserService.js';
 
-const registerUserController = catchAsync(async (req, res, next) => {
+const registerUserController = async (req, res, next) => {
   const { name, email, password } = req.body;
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -14,11 +13,11 @@ const registerUserController = catchAsync(async (req, res, next) => {
   });
 
   if (!user) {
-    return next(new AppError('Email in use', 409));
+    return next(new Error('Email in use', 409));
   }
 
   res.status(201).json({
-    status: 'success',
+    status: 201,
     message: 'Successfully registered a user!',
     data: {
       id: user._id,
@@ -26,6 +25,6 @@ const registerUserController = catchAsync(async (req, res, next) => {
       email: user.email,
     },
   });
-});
+};
 
 export default registerUserController;

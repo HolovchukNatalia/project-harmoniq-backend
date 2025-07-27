@@ -1,24 +1,31 @@
-const errorHandler = (err, req, res, next) => {
-  const statusCode = err.statusCode || err.status || 500;
-  const status = statusCode >= 400 && statusCode < 500 ? 'fail' : 'error';
-  const isDev = process.env.NODE_ENV === 'development';
-  const isOperational = err.isOperational ?? false;
+export const errorHandler = (err, req, res, next) => {
+  let statusCode = 500;
+  let message = 'Internal Server Error';
 
-  const message = isOperational
-    ? err.message
-    : 'Something went wrong. Please try again later.';
-
-  console.error(`Error [${statusCode}]:`, err.message);
-  if (isDev) {
-    console.error(err.stack);
+  if (err.status) {
+    statusCode = err.status;
+    message = err.message;
+  } else if (err.name === 'ValidationError') {
+    statusCode = 400;
+    message = err.message;
+  } else if (err.name === 'MongoError' && err.code === 11000) {
+    statusCode = 409;
+    message = 'Duplicate key error';
+  } else if (err.name === 'JsonWebTokenError') {
+    statusCode = 401;
+    message = 'Invalid token';
+  } else if (err.name === 'TokenExpiredError') {
+    statusCode = 401;
+    message = 'Token expired';
+  } else if (err.message) {
+    message = err.message;
   }
 
-  res.status(statusCode).json({
-    status,
+  const response = {
+    status: statusCode,
     message,
-    ...(isDev && { stack: err.stack }),
-    data: {},
-  });
-};
+    stack: err.stack,
+  };
 
-export default errorHandler;
+  res.status(statusCode).json(response);
+};
