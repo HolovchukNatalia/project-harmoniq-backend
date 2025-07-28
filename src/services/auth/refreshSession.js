@@ -1,6 +1,7 @@
 import createHttpError from 'http-errors';
 import Session from '../../db/models/session.js';
 import { generateSessionTokens } from '../../utils/generateSessionTokens.js';
+import User from '../../db/models/user.js';
 
 export const refreshSession = async (sessionId, sessionToken) => {
   const session = await Session.findOne({
@@ -16,14 +17,23 @@ export const refreshSession = async (sessionId, sessionToken) => {
     throw createHttpError(401, 'Session expired');
   }
 
-  await Session.findOneAndDelete({ _id: sessionId });
+  const user = await User.findById(session.userId);
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
 
-  const newSessionData = {
-    ...generateSessionTokens(),
-    userId: session.userId,
-  };
+  const newTokens = generateSessionTokens();
 
-  const newSession = await Session.create(newSessionData);
+  const updatedSession = await Session.findOneAndUpdate(
+    { _id: sessionId },
+    {
+      accessToken: newTokens.accessToken,
+      refreshToken: newTokens.refreshToken,
+      accessTokenValidUntil: newTokens.accessTokenValidUntil,
+      refreshTokenValidUntil: newTokens.refreshTokenValidUntil,
+    },
+    { new: true },
+  );
 
-  return newSession;
+  return { session: updatedSession, user };
 };

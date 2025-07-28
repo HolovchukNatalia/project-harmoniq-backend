@@ -34,10 +34,19 @@ export const saveArticleToUserController = async (req, res, next) => {
 };
 
 export const allUsersInfoController = async (req, res, next) => {
-  const users = await allUsersInfoService();
+  const { page = 1, perPage = 10 } = req.query;
+  const pageNum = parseInt(page);
+  const perPageNum = parseInt(perPage);
+
+  const { users, paginationData } = await allUsersInfoService({
+    page: pageNum,
+    perPage: perPageNum,
+  });
+
   res.status(200).json({
     status: 200,
     message: 'Users retrieved successfully',
     users,
+    paginationData,
   });
 };
