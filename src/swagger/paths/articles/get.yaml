@@ -1,0 +1,46 @@
+tags:
+  - Articles
+summary: Get a whole list of articles
+operationId: getAllArticles
+description: 'Get list of all articles with this endpoint'
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: page
+    schema:
+      type: integer
+    example: 1
+  - in: query
+    name: perPage
+    schema:
+      type: integer
+      example: 5
+responses:
+  '200':
+    description: 'Successfully retrieved articles'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - articles
+            - paginationData
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully retrieved articles
+            articles:
+              type: array
+              items:
+                $ref: ../../components/schemas/article.yaml
+            paginationData:
+              type: object
+              $ref: ../../components/schemas/pagination.yaml
+  '401':
+    $ref: '../../components/responses/401.yaml'
