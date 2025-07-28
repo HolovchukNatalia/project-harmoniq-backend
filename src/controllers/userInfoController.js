@@ -78,6 +78,6 @@ export const patchUserController = async (req, res, next) => {
   res.status(200).json({
     status: 200,
     message: 'Successfully updated user profile',
-    data: updatedUser,
+    user: updatedUser,
   });
 };
