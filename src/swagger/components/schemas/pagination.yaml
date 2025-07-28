@@ -1,0 +1,27 @@
+type: object
+required:
+  - page
+  - perPage
+  - totalItems
+  - totalPages
+  - hasNextPage
+  - hasPreviousPage
+properties:
+  page:
+    type: number
+    example: 1
+  perPage:
+    type: number
+    example: 12
+  totalItems:
+    type: number
+    example: 208
+  totalPages:
+    type: number
+    example: 18
+  hasNextPage:
+    type: boolean
+    example: true
+  hasPreviousPage:
+    type: boolean
+    example: false

@@ -42,6 +42,24 @@
             "bearerAuth": []
           }
         ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "example": 5
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successfully retrieved articles",
@@ -52,7 +70,8 @@
                   "required": [
                     "status",
                     "message",
-                    "articles"
+                    "articles",
+                    "paginationData"
                   ],
                   "properties": {
                     "status": {
@@ -66,6 +85,10 @@
                     "articles": {
                       "type": "array",
                       "$ref": "#/components/schemas/article"
+                    },
+                    "paginationData": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/pagination"
                     }
                   }
                 }
@@ -576,6 +599,10 @@
                     "users": {
                       "type": "array",
                       "$ref": "#/components/schemas/user"
+                    },
+                    "paginationData": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/pagination"
                     }
                   }
                 }
@@ -692,7 +719,28 @@
         ],
         "responses": {
           "201": {
-            "description": "Article successfully saved"
+            "description": "Article successfully saved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 201
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Article successfully saved"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "$ref": "#/components/responses/401"
@@ -767,6 +815,43 @@
             "description": "Article owner's id",
             "type": "string",
             "example": "68855485f76d12b4e7384005"
+          }
+        }
+      },
+      "pagination": {
+        "type": "object",
+        "required": [
+          "page",
+          "perPage",
+          "totalItems",
+          "totalPages",
+          "hasNextPage",
+          "hasPreviousPage"
+        ],
+        "properties": {
+          "page": {
+            "type": "number",
+            "example": 1
+          },
+          "perPage": {
+            "type": "number",
+            "example": 12
+          },
+          "totalItems": {
+            "type": "number",
+            "example": 208
+          },
+          "totalPages": {
+            "type": "number",
+            "example": 18
+          },
+          "hasNextPage": {
+            "type": "boolean",
+            "example": true
+          },
+          "hasPreviousPage": {
+            "type": "boolean",
+            "example": false
           }
         }
       },

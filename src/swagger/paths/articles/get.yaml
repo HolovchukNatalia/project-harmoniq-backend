@@ -5,6 +5,17 @@ operationId: getAllArticles
 description: 'Get list of all articles with this endpoint'
 security:
   - bearerAuth: []
+parameters:
+  - in: query
+    name: page
+    schema:
+      type: integer
+    example: 1
+  - in: query
+    name: perPage
+    schema:
+      type: integer
+      example: 5
 responses:
   '200':
     description: 'Successfully retrieved articles'
@@ -16,6 +27,7 @@ responses:
             - status
             - message
             - articles
+            - paginationData
           properties:
             status:
               type: integer
@@ -26,5 +38,8 @@ responses:
             articles:
               type: array
               $ref: ../../components/schemas/article.yaml
+            paginationData:
+              type: object
+              $ref: ../../components/schemas/pagination.yaml
   '401':
     $ref: '../../components/responses/401.yaml'

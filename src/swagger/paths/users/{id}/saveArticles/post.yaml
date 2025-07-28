@@ -21,6 +21,20 @@ parameters:
 responses:
   '201':
     description: 'Article successfully saved'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: 'Article successfully saved'
   '401':
     $ref: '../../../../components/responses/401.yaml'
   '403':
