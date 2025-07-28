@@ -5,9 +5,9 @@ import { createDirIfNotExists } from './utils/createDirIfNotExists.js';
 
 const bootstrap = async () => {
   try {
-    await initMongoDB();
     await createDirIfNotExists(TEMP_UPLOAD_DIR);
     await createDirIfNotExists(UPLOAD_DIR);
+    await initMongoDB();
     setupServer();
   } catch (err) {
     console.error('Error during app initialization:', err);

@@ -2,11 +2,9 @@ import { allUsersInfoService } from '../services/users/allUsersInfoService.js';
 import { getUserArticlesServise } from '../services/users/getUserArticlesServise.js';
 import { saveArticleToUserServise } from '../services/users/saveArticleToUserServise.js';
 import { userInfoService } from '../services/users/userInfoService.js';
-import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
-import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 import User from '../db/models/user.js';
 import createHttpError from 'http-errors';
-import { getEnvVar } from '../utils/getEvnVar.js';
+import { uploadUserAvatar } from '../services/users/uploadUserAvatar.js';
 
 export const userInfoController = async (req, res, next) => {
   const { userId } = req.params;
@@ -58,16 +56,7 @@ export const allUsersInfoController = async (req, res, next) => {
 
 export const patchUserController = async (req, res, next) => {
   const { userId } = req.params;
-  const photo = req.file;
-  let avatarUrl;
-
-  if (photo) {
-    if (getEnvVar('ENABLE_CLOUDINARY') === 'true') {
-      avatarUrl = await saveFileToCloudinary(photo);
-    } else {
-      avatarUrl = await saveFileToUploadDir(photo);
-    }
-  }
+  const avatarUrl = await uploadUserAvatar(req.file);
 
   const updateData = {
     ...req.body,
@@ -80,6 +69,7 @@ export const patchUserController = async (req, res, next) => {
     new: true,
     runValidators: true,
   });
+
   if (!updatedUser) {
     return next(createHttpError(404, 'User not found'));
   }
