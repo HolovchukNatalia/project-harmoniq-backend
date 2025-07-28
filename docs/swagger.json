@@ -12,6 +12,9 @@
   "servers": [
     {
       "url": "https://project-harmoniq-backend.onrender.com"
+    },
+    {
+      "url": "http://localhost:3000"
     }
   ],
   "tags": [

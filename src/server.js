@@ -7,6 +7,7 @@ import articlesRoutes from './routers/articlesRoutes.js';
 import authRoutes from './routers/authRoutes.js';
 import usersRoutes from './routers/usersRoutes.js';
 
+import { swaggerDocs } from './middlewares/swaggerDocs.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
@@ -54,6 +55,8 @@ export function setupServer() {
   app.use('/auth', authRoutes);
   app.use('/users', usersRoutes);
   app.use('/articles', articlesRoutes);
+
+  app.use('/api-docs', swaggerDocs());
 
   app.use(notFoundHandler);
   app.use(errorHandler);

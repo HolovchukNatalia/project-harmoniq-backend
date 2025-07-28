@@ -15,6 +15,7 @@ tags:
     description: Operations about users.
 servers:
   - url: https://project-harmoniq-backend.onrender.com
+  - url: http://localhost:3000
 paths:
   /articles:
     get:
