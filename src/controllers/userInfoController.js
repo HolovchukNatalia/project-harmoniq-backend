@@ -56,19 +56,21 @@ export const allUsersInfoController = async (req, res, next) => {
 
 export const patchUserController = async (req, res, next) => {
   const { userId } = req.params;
-  const avatarUrl = await uploadUserAvatar(req.file);
+  const image = await uploadUserAvatar(req.file);
 
   const updateData = {
     ...req.body,
   };
-  if (avatarUrl) {
-    updateData.avatarUrl = avatarUrl;
+  if (image) {
+    updateData.avatarUrl = image;
   }
 
   const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
     new: true,
     runValidators: true,
-  });
+  })
+    .select('-password')
+    .select('-email');
 
   if (!updatedUser) {
     return next(createHttpError(404, 'User not found'));
