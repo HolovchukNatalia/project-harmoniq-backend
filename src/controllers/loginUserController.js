@@ -1,22 +1,14 @@
 import { loginUser } from '../services/auth/loginUserService.js';
+import { setSecureCookie } from '../utils/cookie/setSecureCookie.js';
 
 export const loginUserController = async (req, res) => {
   const { session, user } = await loginUser(req.body);
 
-  res.cookie('sessionId', session.id, {
-    httpOnly: true,
+  setSecureCookie(res, 'sessionId', session.id, {
     expires: session.refreshTokenValidUntil,
-    sameSite: 'none',
-    secure: true,
-    path: '/',
   });
-
-  res.cookie('sessionToken', session.refreshToken, {
-    httpOnly: true,
+  setSecureCookie(res, 'sessionToken', session.refreshToken, {
     expires: session.refreshTokenValidUntil,
-    sameSite: 'none',
-    secure: true,
-    path: '/',
   });
 
   res.json({
