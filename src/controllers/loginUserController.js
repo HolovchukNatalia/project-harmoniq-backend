@@ -6,11 +6,17 @@ export const loginUserController = async (req, res) => {
   res.cookie('sessionId', session.id, {
     httpOnly: true,
     expires: session.refreshTokenValidUntil,
+    sameSite: 'none',
+    secure: true,
+    path: '/',
   });
 
   res.cookie('sessionToken', session.refreshToken, {
     httpOnly: true,
     expires: session.refreshTokenValidUntil,
+    sameSite: 'none',
+    secure: true,
+    path: '/',
   });
 
   res.json({

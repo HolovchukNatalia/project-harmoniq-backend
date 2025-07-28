@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { registerUserService } from '../services/auth/registerUserService.js';
+import createHttpError from 'http-errors';
 
 const registerUserController = async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -13,7 +14,7 @@ const registerUserController = async (req, res, next) => {
   });
 
   if (!user) {
-    return next(new Error('Email in use', 409));
+    return next(createHttpError(409, 'Email in use'));
   }
 
   res.status(201).json({
