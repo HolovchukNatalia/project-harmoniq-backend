@@ -1,0 +1,19 @@
+description: 'Article not found'
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+        - data
+      properties:
+        status:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: Article with id 68855dd9f76d12b4e738412e not found!
+        data:
+          type: object
+          example: {}

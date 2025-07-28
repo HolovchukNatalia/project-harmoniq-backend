@@ -1,0 +1,55 @@
+openapi: 3.1.0
+info:
+  version: 1.0.0
+  title: Harmoniq
+  license:
+    name: Apache 2.0
+    url: <http://www.apache.org/licenses/LICENSE-2.0.html>
+  description: Documentation of Harmoniq service
+tags:
+  - name: Articles
+    description: Operations about articles.
+  - name: Authorization
+    description: Authorization operations.
+  - name: Users
+    description: Operations about users.
+servers:
+  - url: https://project-harmoniq-backend.onrender.com
+  - url: http://localhost:3000
+paths:
+  /articles:
+    get:
+      $ref: '../src/swagger/paths/articles/get.yaml'
+    post:
+      $ref: '../src/swagger/paths/articles/post.yaml'
+  /articles/{articleId}:
+    get:
+      $ref: '../src/swagger/paths/articles/{id}/get.yaml'
+    delete:
+      $ref: '../src/swagger/paths/articles/{id}/delete.yaml'
+  /auth/register:
+    post:
+      $ref: '../src/swagger/paths/auth/register/post.yaml'
+  /auth/login:
+    post:
+      $ref: '../src/swagger/paths/auth/login/post.yaml'
+  /auth/logout:
+    post:
+      $ref: '../src/swagger/paths/auth/logout/post.yaml'
+  /auth/refresh:
+    post:
+      $ref: '../src/swagger/paths/auth/refresh/post.yaml'
+  /users:
+    get:
+      $ref: '../src/swagger/paths/users/get.yaml'
+  /users/{userId}:
+    get:
+      $ref: '../src/swagger/paths/users/{id}/get.yaml'
+  /users/{userId}/save/{articleId}:
+    post:
+      $ref: '../src/swagger/paths/users/{id}/saveArticles/post.yaml'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

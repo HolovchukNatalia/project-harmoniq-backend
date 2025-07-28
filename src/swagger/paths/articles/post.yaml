@@ -1,0 +1,83 @@
+tags:
+  - Articles
+summary: Create article
+operationId: createArticle
+description: 'Create an article with payload'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - img
+          - title
+          - desc
+          - article
+          - date
+          - ownerId
+        properties:
+          _id:
+            description: "Article's id"
+            type: string
+            example: '68855dd9f76d12b4e738412e'
+          img:
+            description: "Article's image"
+            type: string
+            example: 'https://ftp.goit.study/img/harmoniq/f12e886489f94b5886d03e95vn.jpg'
+          title:
+            description: "Article's title"
+            type: string
+            minLength: 5
+            maxLength: 100
+            example: 'Коли тривога заповнює простір: шлях до спокою'
+          desc:
+            description: "Article's description"
+            type: string
+            minLength: 10
+            maxLength: 100
+            example: 'Медитації, які допомагають відновити внутрішній спокій'
+          article:
+            description: "Main Article's part"
+            type: string
+            minLength: 100
+            example: 'У кожного з нас бувають моменти, коли тривога наче туман огортає думки, не даючи побачити ясне небо. Це відчуття ніби нескінченний внутрішній шум, який здається нестерпним і безвихідним. Однак саме у такі миті ми особливо гостро потребуємо заземлення, повернення до себе і пошуку свого внутрішнього центру. Ця стаття — про те, як упізнати тривогу і почати рухатися до спокою через прості, але ефективні практики. Тривога — це...'
+          rate:
+            description: "Article's rating"
+            type: number
+            default: 0
+            example: 16
+          date:
+            description: "Article's publishing date"
+            type: string
+            example: '2025-03-27T00:00:00.000Z'
+          ownerId:
+            description: "Article owner's id"
+            type: string
+            example: '68855485f76d12b4e7384005'
+responses:
+  '201':
+    description: 'Successfully created an article!'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfuly created an article!
+            data:
+              type: object
+              $ref: ../../components/schemas/article.yaml
+  '400':
+    $ref: '../../components/responses/400.yaml'
+  '401':
+    $ref: '../../components/responses/401.yaml'

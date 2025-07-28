@@ -13,7 +13,7 @@ export const userInfoController = async (req, res, next) => {
   const userArticles = await getUserArticlesServise(userId);
   res.status(200).json({
     status: 200,
-    message: `User with ${userId} successfull found`,
+    message: `User with ${userId} successfully found`,
     user,
     userArticles,
   });

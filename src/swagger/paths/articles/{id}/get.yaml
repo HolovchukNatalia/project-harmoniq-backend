@@ -1,0 +1,39 @@
+tags:
+  - Articles
+summary: Get a single article by id
+operationId: getArticleById
+description: 'Get an article by id'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: articleId
+    required: true
+    schema:
+      type: string
+      example: '6687bd0b07d349529f997ba9'
+responses:
+  '200':
+    description: 'Successfully found article with id 6687bd0b07d349529f997ba9!'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - article
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found article with id 68855dd9f76d12b4e7384136!
+            article:
+              type: object
+              $ref: '../../../components/schemas/article.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
