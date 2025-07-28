@@ -9,11 +9,12 @@ import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 
 export const getArticlesController = async (req, res, next) => {
   const { page, perPage } = parsePaginationParams(req.query);
-  const { filter: sortMethod } = req.query;
+  const { filter: sortMethod, ownerId } = req.query;
   const articles = await getAllArticles({
     page,
     perPage,
     sortMethod,
+    ownerId,
   });
   res.status(200).json({
     status: 200,
