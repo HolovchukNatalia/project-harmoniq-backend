@@ -2,6 +2,9 @@ import { allUsersInfoService } from '../services/users/allUsersInfoService.js';
 import { getUserArticlesServise } from '../services/users/getUserArticlesServise.js';
 import { saveArticleToUserServise } from '../services/users/saveArticleToUserServise.js';
 import { userInfoService } from '../services/users/userInfoService.js';
+import User from '../db/models/user.js';
+import createHttpError from 'http-errors';
+import { uploadUserAvatar } from '../services/users/uploadUserAvatar.js';
 
 export const userInfoController = async (req, res, next) => {
   const { userId } = req.params;
@@ -48,5 +51,31 @@ export const allUsersInfoController = async (req, res, next) => {
     message: 'Users retrieved successfully',
     users,
     paginationData,
+  });
+};
+
+export const patchUserController = async (req, res, next) => {
+  const { userId } = req.params;
+  const avatarUrl = await uploadUserAvatar(req.file);
+
+  const updateData = {
+    ...req.body,
+  };
+  if (avatarUrl) {
+    updateData.avatarUrl = avatarUrl;
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!updatedUser) {
+    return next(createHttpError(404, 'User not found'));
+  }
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully updated user profile',
+    data: updatedUser,
   });
 };
