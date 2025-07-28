@@ -9,11 +9,13 @@ export const logoutUserController = async (req, res) => {
     path: '/',
     sameSite: 'none',
     secure: true,
+    httpOnly: true,
   });
   res.clearCookie('sessionId', {
     path: '/',
     sameSite: 'none',
     secure: true,
+    httpOnly: true,
   });
 
   if (!isLoggedOut) {
