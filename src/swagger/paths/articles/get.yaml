@@ -37,7 +37,8 @@ responses:
               example: Successfully retrieved articles
             articles:
               type: array
-              $ref: ../../components/schemas/article.yaml
+              items:
+                $ref: ../../components/schemas/article.yaml
             paginationData:
               type: object
               $ref: ../../components/schemas/pagination.yaml

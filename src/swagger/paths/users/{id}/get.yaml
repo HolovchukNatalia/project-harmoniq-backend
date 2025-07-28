@@ -37,7 +37,8 @@ responses:
             userArticles:
               description: 'How much and what articles have been created by the user'
               type: array
-              $ref: '../../../components/schemas/article.yaml'
+              items:
+                $ref: '../../../components/schemas/article.yaml'
   '401':
     $ref: '../../../components/responses/401.yaml'
   '404':

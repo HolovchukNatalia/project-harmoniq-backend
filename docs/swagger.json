@@ -87,7 +87,9 @@
                     },
                     "articles": {
                       "type": "array",
-                      "$ref": "#/components/schemas/article"
+                      "items": {
+                        "$ref": "#/components/schemas/article"
+                      }
                     },
                     "paginationData": {
                       "type": "object",
@@ -601,7 +603,9 @@
                     },
                     "users": {
                       "type": "array",
-                      "$ref": "#/components/schemas/user"
+                      "items": {
+                        "$ref": "#/components/schemas/user"
+                      }
                     },
                     "paginationData": {
                       "type": "object",
@@ -671,7 +675,9 @@
                     "userArticles": {
                       "description": "How much and what articles have been created by the user",
                       "type": "array",
-                      "$ref": "#/components/schemas/article"
+                      "items": {
+                        "$ref": "#/components/schemas/article"
+                      }
                     }
                   }
                 }

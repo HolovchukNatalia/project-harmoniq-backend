@@ -25,7 +25,8 @@ responses:
               example: Users retrieved successfully
             users:
               type: array
-              $ref: ../../components/schemas/user.yaml
+              items:
+                $ref: ../../components/schemas/user.yaml
             paginationData:
               type: object
               $ref: ../../components/schemas/pagination.yaml
