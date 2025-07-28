@@ -1,22 +1,15 @@
 import { refreshSession } from '../services/auth/refreshSession.js';
+import { setSecureCookie } from '../utils/cookie/setSecureCookie.js';
 
 export const refreshSessionController = async (req, res) => {
   const { sessionId, sessionToken } = req.cookies;
   const { session, user } = await refreshSession(sessionId, sessionToken);
-  res.cookie('sessionId', session.id, {
-    httpOnly: true,
-    expires: session.refreshTokenValidUntil,
-    sameSite: 'none',
-    secure: true,
-    path: '/',
-  });
 
-  res.cookie('sessionToken', session.refreshToken, {
-    httpOnly: true,
+  setSecureCookie(res, 'sessionId', session.id, {
     expires: session.refreshTokenValidUntil,
-    sameSite: 'none',
-    secure: true,
-    path: '/',
+  });
+  setSecureCookie(res, 'sessionToken', session.refreshToken, {
+    expires: session.refreshTokenValidUntil,
   });
 
   res.json({

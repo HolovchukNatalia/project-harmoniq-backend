@@ -1,20 +1,13 @@
 import { logoutUser } from '../services/auth/logoutUserService.js';
+import { clearSecureCookie } from '../utils/cookie/clearSecureCookie.js';
 
 export const logoutUserController = async (req, res) => {
   const { sessionId, sessionToken } = req.cookies;
 
   const isLoggedOut = await logoutUser(sessionId, sessionToken);
 
-  res.clearCookie('sessionToken', {
-    path: '/',
-    sameSite: 'none',
-    secure: true,
-  });
-  res.clearCookie('sessionId', {
-    path: '/',
-    sameSite: 'none',
-    secure: true,
-  });
+  clearSecureCookie(res, 'sessionId');
+  clearSecureCookie(res, 'sessionToken');
 
   if (!isLoggedOut) {
     return res.status(401).json({
