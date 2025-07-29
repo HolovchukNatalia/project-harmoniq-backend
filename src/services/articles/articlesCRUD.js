@@ -6,17 +6,31 @@ export const getAllArticles = async ({ page, perPage, sortMethod }) => {
   const limit = perPage;
   const skip = (page - 1) * perPage;
 
-  const articlesQuery = Article.find();
+  let articlesQuery = Article.find();
 
   if (sortMethod === 'popular') {
-    articlesQuery.sort({ rate: -1 });
+    articlesQuery = articlesQuery.sort({ rate: -1 });
   }
 
+  articlesQuery = articlesQuery
+    .skip(skip)
+    .limit(limit)
+    .populate('ownerId', 'name')
+    .lean();
+
   const articlesCount = await Article.countDocuments();
-  const articles = await articlesQuery.skip(skip).limit(limit).exec();
+  const articles = await articlesQuery.exec();
+
+  const articlesWithAuthor = articles.map((article) => ({
+    ...article,
+    author: article.ownerId?.name || null,
+    ownerId: article.ownerId?._id || article.ownerId,
+  }));
+
   const paginationData = calculatePaginationData(articlesCount, perPage, page);
+
   return {
-    articles,
+    articles: articlesWithAuthor,
     paginationData,
   };
 };
