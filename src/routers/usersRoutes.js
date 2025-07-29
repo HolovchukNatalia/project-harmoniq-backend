@@ -9,17 +9,22 @@ import { saveArticleToUserController } from '../controllers/users/saveArticleToU
 import { patchUserProfileController } from '../controllers/users/patchUserProfile.js';
 import { getUsersAllController } from '../controllers/users/getUsersAllController.js';
 import { getUserByIdController } from '../controllers/users/getUserByIdController.js';
+import { getPopularUsersController } from '../controllers/users/getPopularUsersController.js';
 
 const upload = multer({ dest: 'uploads/' });
 
 const router = Router();
+
+router.get('/', ctrlWrapper(getUsersAllController));
+router.get('/popular', ctrlWrapper(getPopularUsersController));
+
+router.get('/:userId/', ctrlWrapper(getUserByIdController));
+
 router.post(
   '/:userId/save/:articleId',
   authenticate,
   ctrlWrapper(saveArticleToUserController),
 );
-router.get('/:userId/', ctrlWrapper(getUserByIdController));
-router.get('/', ctrlWrapper(getUsersAllController));
 
 router.patch(
   '/:userId',
