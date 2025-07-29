@@ -36,8 +36,15 @@ export const getAllArticles = async ({ page, perPage, sortMethod }) => {
 };
 
 export const getArticleById = async (articleId) => {
-  const article = await Article.findOne({ _id: articleId });
-  return article;
+  const article = await Article.findOne({ _id: articleId })
+    .populate('ownerId', 'name')
+    .lean();
+
+  return {
+    ...article,
+    author: article?.ownerId?.name || null,
+    ownerId: article?.ownerId?._id || article.ownerId,
+  };
 };
 
 export const createArticle = async (payload) => {
