@@ -1,34 +1,37 @@
 import { Router } from 'express';
 
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import {
-  allUsersInfoController,
-  patchUserController,
-  saveArticleToUserController,
-  userInfoController,
-} from '../controllers/userInfoController.js';
 import { authenticate } from '../middlewares/authenticate.js';
 import multer from 'multer';
 import { validateBody } from '../middlewares/validateBody.js';
 import { updateUserSchema } from '../validation/updateUserSchema.js';
+import { saveArticleToUserController } from '../controllers/users/saveArticleToUserController.js';
+import { patchUserProfileController } from '../controllers/users/patchUserProfile.js';
+import { getUsersAllController } from '../controllers/users/getUsersAllController.js';
+import { getUserByIdController } from '../controllers/users/getUserByIdController.js';
+import { getPopularUsersController } from '../controllers/users/getPopularUsersController.js';
 
 const upload = multer({ dest: 'uploads/' });
 
 const router = Router();
+
+router.get('/', ctrlWrapper(getUsersAllController));
+router.get('/popular', ctrlWrapper(getPopularUsersController));
+
+router.get('/:userId/', ctrlWrapper(getUserByIdController));
+
 router.post(
   '/:userId/save/:articleId',
   authenticate,
   ctrlWrapper(saveArticleToUserController),
 );
-router.get('/:userId/', ctrlWrapper(userInfoController));
-router.get('/', ctrlWrapper(allUsersInfoController));
 
 router.patch(
   '/:userId',
   authenticate,
   upload.single('avatarUrl'),
   validateBody(updateUserSchema),
-  ctrlWrapper(patchUserController),
+  ctrlWrapper(patchUserProfileController),
 );
 
 export default router;

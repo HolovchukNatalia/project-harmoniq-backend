@@ -1,5 +1,5 @@
-import { logoutUser } from '../services/auth/logoutUserService.js';
-import { clearSecureCookie } from '../utils/cookie/clearSecureCookie.js';
+import { logoutUser } from '../../services/auth/logoutUserService.js';
+import { clearSecureCookie } from '../../utils/cookie/clearSecureCookie.js';
 
 export const logoutUserController = async (req, res) => {
   const { sessionId, sessionToken } = req.cookies;

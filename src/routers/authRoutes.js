@@ -1,15 +1,16 @@
 import express from 'express';
-import registerUserController from '../controllers/registerUserController.js';
-import { loginUserController } from '../controllers/loginUserController.js';
-import { logoutUserController } from '../controllers/logoutUserController.js';
-import { refreshSessionController } from '../controllers/refreshSessionController.js';
-import { registerUserSchema } from '../validation/registerUserSchema.js';
-import { loginUserSchema } from '../validation/loginUserSchema.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
+import { registerUserSchema } from '../validation/registerUserSchema.js';
+import { registerUserController } from '../controllers/auth/registerUserController.js';
+import { loginUserSchema } from '../validation/loginUserSchema.js';
+import { loginUserController } from '../controllers/auth/loginUserController.js';
+import { logoutUserController } from '../controllers/auth/logoutUserController.js';
+import { refreshSessionController } from '../controllers/auth/refreshSessionController.js';
 
 const router = express.Router();
 
+// Публічні маршрути
 router.post(
   '/register',
   validateBody(registerUserSchema),

@@ -1,5 +1,7 @@
-import { loginUser } from '../services/auth/loginUserService.js';
-import { setSecureCookie } from '../utils/cookie/setSecureCookie.js';
+import { loginUser } from '../../services/auth/loginUserService.js';
+import { cleanUser } from '../../utils/cleanUser.js';
+import { setSecureCookie } from '../../utils/cookie/setSecureCookie.js';
+import { getUserContent } from '../../utils/getUserContent.js';
 
 export const loginUserController = async (req, res) => {
   const { session, user } = await loginUser(req.body);
@@ -11,16 +13,20 @@ export const loginUserController = async (req, res) => {
     expires: session.refreshTokenValidUntil,
   });
 
+  const cleanedUser = cleanUser(user);
+
+  const { userArticles, savedArticles } = await getUserContent(
+    user._id,
+    user.saved,
+  );
   res.json({
     status: 200,
     message: 'Successfully logged in an user!',
     data: {
       accessToken: session.accessToken,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-      },
+      user: cleanedUser,
+      userArticles,
+      savedArticles,
     },
   });
 };

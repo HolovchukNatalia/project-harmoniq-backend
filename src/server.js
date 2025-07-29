@@ -11,6 +11,7 @@ import { swaggerDocs } from './middlewares/swaggerDocs.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { UPLOAD_DIR } from './constants/index.js';
+import { isDevEnv } from './utils/isDevEnv.js';
 
 const PORT = Number(getEnvVar('PORT', '3000'));
 
@@ -65,5 +66,10 @@ export function setupServer() {
   app.use('/uploads', express.static(UPLOAD_DIR));
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
+    if (isDevEnv()) {
+      console.log('⚙️ Запущено в режимі розробки');
+    } else {
+      console.log('🔐 Продакшн режим');
+    }
   });
 }
