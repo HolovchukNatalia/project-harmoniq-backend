@@ -2,7 +2,7 @@ import createHttpError from 'http-errors';
 import User from '../../db/models/user.js';
 import mongoose from 'mongoose';
 
-export const userInfoService = async (id) => {
+export const getUserByIdService = async (id) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     throw createHttpError(400, 'Invalid user ID');
   }

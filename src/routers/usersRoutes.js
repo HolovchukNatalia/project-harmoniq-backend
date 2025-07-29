@@ -1,16 +1,14 @@
 import { Router } from 'express';
 
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import {
-  allUsersInfoController,
-  patchUserController,
-  saveArticleToUserController,
-  userInfoController,
-} from '../controllers/userInfoController.js';
 import { authenticate } from '../middlewares/authenticate.js';
 import multer from 'multer';
 import { validateBody } from '../middlewares/validateBody.js';
 import { updateUserSchema } from '../validation/updateUserSchema.js';
+import { saveArticleToUserController } from '../controllers/users/saveArticleToUserController.js';
+import { patchUserProfileController } from '../controllers/users/patchUserProfile.js';
+import { getUsersAllController } from '../controllers/users/getUsersAllController.js';
+import { getUserByIdController } from '../controllers/users/getUserByIdController.js';
 
 const upload = multer({ dest: 'uploads/' });
 
@@ -20,15 +18,15 @@ router.post(
   authenticate,
   ctrlWrapper(saveArticleToUserController),
 );
-router.get('/:userId/', ctrlWrapper(userInfoController));
-router.get('/', ctrlWrapper(allUsersInfoController));
+router.get('/:userId/', ctrlWrapper(getUserByIdController));
+router.get('/', ctrlWrapper(getUsersAllController));
 
 router.patch(
   '/:userId',
   authenticate,
   upload.single('avatarUrl'),
   validateBody(updateUserSchema),
-  ctrlWrapper(patchUserController),
+  ctrlWrapper(patchUserProfileController),
 );
 
 export default router;

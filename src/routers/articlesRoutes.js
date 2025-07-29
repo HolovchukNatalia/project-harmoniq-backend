@@ -1,14 +1,12 @@
 import { Router } from 'express';
-import {
-  getArticlesController,
-  getArticleByIdController,
-  createArticleController,
-  deleteArticleController,
-} from '../controllers/articlesController.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { authenticate } from '../middlewares/authenticate.js';
 import { articleSchema } from '../validation/articleShema.js';
+import { getArticlesController } from '../controllers/articles/getArticlesController.js';
+import { getArticleByIdController } from '../controllers/articles/getArticleByIdController.js';
+import { createArticleController } from '../controllers/articles/createArticleController.js';
+import { deleteArticleController } from '../controllers/articles/deleteArticleController.js';
 
 const router = Router();
 

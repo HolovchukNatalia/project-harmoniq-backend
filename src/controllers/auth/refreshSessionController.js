@@ -1,5 +1,6 @@
-import { refreshSession } from '../services/auth/refreshSession.js';
-import { setSecureCookie } from '../utils/cookie/setSecureCookie.js';
+import { refreshSession } from '../../services/auth/refreshSession.js';
+import { cleanUser } from '../../utils/cleanUser.js';
+import { setSecureCookie } from '../../utils/cookie/setSecureCookie.js';
 
 export const refreshSessionController = async (req, res) => {
   const { sessionId, sessionToken } = req.cookies;
@@ -12,16 +13,14 @@ export const refreshSessionController = async (req, res) => {
     expires: session.refreshTokenValidUntil,
   });
 
+  const cleanedUser = cleanUser(user);
+
   res.json({
     status: 200,
     message: 'Successfully refreshed a session!',
     data: {
       accessToken: session.accessToken,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-      },
+      user: cleanedUser,
     },
   });
 };

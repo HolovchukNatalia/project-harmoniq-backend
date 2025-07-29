@@ -1,7 +1,7 @@
 import User from '../../db/models/user.js';
 import { calculatePaginationData } from '../../utils/calculatePaginationData.js';
 
-export const allUsersInfoService = async ({ page = 1, perPage = 10 }) => {
+export const getUsersAllService = async ({ page = 1, perPage = 10 }) => {
   const limit = perPage;
   const skip = (page - 1) * perPage;
 

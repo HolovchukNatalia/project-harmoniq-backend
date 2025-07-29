@@ -1,8 +1,10 @@
+import { isDevEnv } from '../isDevEnv.js';
+
 export function setSecureCookie(res, name, value, options = {}) {
   const defaultOptions = {
     httpOnly: true,
-    secure: true,
-    sameSite: 'none',
+    secure: !isDevEnv(),
+    sameSite: isDevEnv() ? 'lax' : 'none',
     path: '/',
   };
 
