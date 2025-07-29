@@ -12,6 +12,6 @@ export const getArticlesController = async (req, res, next) => {
   res.status(200).json({
     status: 200,
     message: 'Successfully retrieved articles',
-    ...articles,
+    data: { ...articles },
   });
 };
