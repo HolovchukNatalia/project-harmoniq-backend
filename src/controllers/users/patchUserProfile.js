@@ -1,11 +1,11 @@
 import createHttpError from 'http-errors';
 import User from '../../db/models/user.js';
-import { uploadUserAvatar } from '../../services/users/uploadUserAvatar.js';
+import { uploadImageFile } from '../../utils/uploadImageFile.js';
 import { cleanUser } from '../../utils/cleanUser.js';
 
 export const patchUserProfileController = async (req, res, next) => {
   const { userId } = req.params;
-  const image = await uploadUserAvatar(req.file);
+  const image = await uploadImageFile(req.file);
 
   const updateData = {
     ...req.body,

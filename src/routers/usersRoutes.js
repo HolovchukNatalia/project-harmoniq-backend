@@ -29,7 +29,7 @@ router.post(
 router.patch(
   '/:userId',
   authenticate,
-  upload.single('avatarUrl'),
+  upload.single('image'),
   validateBody(updateUserSchema),
   ctrlWrapper(patchUserProfileController),
 );
