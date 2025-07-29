@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const ArticleSchema = new mongoose.Schema(
   {
-    img: {
+    image: {
       type: String,
       required: [true, 'Image URL is required'],
     },

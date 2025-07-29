@@ -2,7 +2,7 @@ import Joi from 'joi';
 import mongoose from 'mongoose';
 
 export const articleSchema = Joi.object({
-  img: Joi.string().uri().required().messages({
+  image: Joi.string().uri().required().messages({
     'any.required': 'Image is required',
     'string.uri': 'Invalid image format (must be a valid URL)',
   }),
