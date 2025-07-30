@@ -11,7 +11,7 @@ requestBody:
       schema:
         type: object
         required:
-          - img
+          - image
           - title
           - desc
           - article
@@ -22,7 +22,7 @@ requestBody:
             description: "Article's id"
             type: string
             example: '68855dd9f76d12b4e738412e'
-          img:
+          image:
             description: "Article's image"
             type: string
             example: 'https://ftp.goit.study/img/harmoniq/f12e886489f94b5886d03e95vn.jpg'
@@ -76,7 +76,7 @@ responses:
               example: Successfuly created an article!
             data:
               type: object
-              $ref: ../../components/schemas/article.yaml
+              $ref: ../../components/schemas/newArticle.yaml
   '400':
     $ref: '../../components/responses/400.yaml'
   '401':

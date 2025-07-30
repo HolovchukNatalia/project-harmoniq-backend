@@ -1,11 +1,17 @@
 type: object
 required:
+  - saved
   - _id
   - name
   - avatarUrl
   - articlesAmount
-  - saved
 properties:
+  saved:
+    description: 'How much of which articles(shown in articleIds) have been saved by a person'
+    type: array
+    items:
+      type: string
+      example: '6881563901add19ee16fd041'
   _id:
     description: "User's Id"
     type: string
@@ -22,9 +28,3 @@ properties:
     description: 'How much articles has a person created'
     type: number
     example: 2
-  saved:
-    description: 'How much of which articles(shown in articleIds) have been saved by a person'
-    type: array
-    items:
-      type: string
-      example: '68855dd9f76d12b4e7384185'

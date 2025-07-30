@@ -123,7 +123,7 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "img",
+                  "image",
                   "title",
                   "desc",
                   "article",
@@ -136,7 +136,7 @@
                     "type": "string",
                     "example": "68855dd9f76d12b4e738412e"
                   },
-                  "img": {
+                  "image": {
                     "description": "Article's image",
                     "type": "string",
                     "example": "https://ftp.goit.study/img/harmoniq/f12e886489f94b5886d03e95vn.jpg"
@@ -205,7 +205,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "$ref": "#/components/schemas/article"
+                      "$ref": "#/components/schemas/newArticle"
                     }
                   }
                 }
@@ -247,7 +247,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successfully found article with id 6687bd0b07d349529f997ba9!",
+            "description": "Successfully found article with id {articleId}!",
             "content": {
               "application/json": {
                 "schema": {
@@ -315,6 +315,74 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/articles/popular": {
+      "get": {
+        "tags": [
+          "Articles"
+        ],
+        "summary": "Get a list of most popular articles",
+        "operationId": "getPopularArticlesService",
+        "description": "Get a list of most popular articles",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "description": "How much popular articles should be shown",
+            "name": "limit",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "10"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Top {limit} popular articles",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Top 5 popular articles"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "articles": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/article"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
           }
         }
       }
@@ -648,7 +716,7 @@
         ],
         "responses": {
           "200": {
-            "description": "User with 68855485f76d12b4e7384005 successfully found",
+            "description": "User with {userId} successfully found",
             "content": {
               "application/json": {
                 "schema": {
@@ -670,13 +738,137 @@
                     },
                     "user": {
                       "type": "object",
-                      "$ref": "#/components/schemas/user"
+                      "$ref": "#/components/schemas/foundUser"
                     },
                     "userArticles": {
                       "description": "How much and what articles have been created by the user",
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/article"
+                      }
+                    },
+                    "savedArticles": {
+                      "description": "How much of which articles have been saved by the user",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/article"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User not found"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {}
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update user by id",
+        "operationId": "cleanUser",
+        "description": "Update user by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "6687bd0b07d349529f997ba9"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "Contact's name",
+                    "type": "string",
+                    "example": "Valera"
+                  },
+                  "saved": {
+                    "description": "Contact's saved-array",
+                    "type": "array",
+                    "items": {
+                      "example": [
+                        "6687bd0b07d349529f997ba9",
+                        "2466h34534b37392003ba11s"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated user profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully updated user profile"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "$ref": "#/components/schemas/patchedUser"
+                        }
                       }
                     }
                   }
@@ -762,6 +954,74 @@
           }
         }
       }
+    },
+    "/users/popular": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get a list of most popular users",
+        "operationId": "getPopularUsers",
+        "description": "Get a list of most popular articles by articlesAmount",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "description": "How much popular users should be shown",
+            "name": "limit",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "10"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Top {limit} users sorted by articlesAmount",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Top 5 users sorted by articlesAmount"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "users": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/popularUser"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -808,7 +1068,7 @@
           "article": {
             "description": "Main Article's part",
             "type": "string",
-            "example": "У кожного з нас бувають моменти, коли тривога наче туман огортає думки, не даючи побачити ясне небо. Це відчуття ніби нескінченний внутрішній шум, який здається нестерпним і безвихідним. Однак саме у такі миті ми особливо гостро потребуємо заземлення, повернення до себе і пошуку свого внутрішнього центру. Ця стаття — про те, як упізнати тривогу і почати рухатися до спокою через прості, але ефективні практики. Тривога — це..."
+            "example": "Тривога — це відчуття, яке всі ми час від часу переживаємо. Вона може проявлятися як невизначене занепокоєння, підсилене серцебиття або внутрішня напруга, що не дає спокою. Коли тривога заповнює наш внутрішній простір, здається, що неможливо знайти затишок навіть у найпростіших моментах життя. Проте важливо пам’ятати, що це не кінець і не вирок. Шлях до спокою доступний кожному, і він часто починається з усвідомленого ставлення до себе і свого стану. /n Розпочати цей шлях можна з простих, але ефективних методів, що допомагають повернути контроль над власними емоціями. Одним із таких є усвідомлене дихання. Коли тривога з’являється, наше дихання часто стає поверхневим і прискореним, що лише підсилює напругу. Зосередившись на глибоких, повільних вдихах і видихах, можна стабілізувати роботу нервової системи і зменшити інтенсивність тривожних відчуттів. Наприклад, техніка «4-7-8» передбачає вдих на рахунок чотири, затримку дихання на сім секунд та повільний видих на вісім. Практикуючи таке дихання регулярно, ви не лише швидко полегшите стан у момент тривоги, а й з часом навчитеся реагувати на стрес більш спокійно. /n Іншим важливим інструментом є ведення щоденника. Записування своїх думок і емоцій допомагає краще їх усвідомити і впорядкувати. Часто тривога живиться хаотичними, негативними припущеннями і сценаріями майбутнього, які виникають у нашій уяві. Коли ви викладаєте ці думки на папір, вони втрачають свою силу та стають більш зрозумілими. У щоденнику можна не лише описувати тривожні переживання, але й відмічати моменти спокою, вдячності, успіху — це допомагає збалансувати емоційний фон і побачити, що життя не складається лише з напруги. /n Практики майндфулнес також є надзвичайно корисними у боротьбі з тривогою. Вони вчать зупинятися у теперішньому моменті, звертати увагу на свої відчуття, думки і навколишнє середовище без осуду. Це ніби тренування для розуму, яке дозволяє не зациклюватися на тривожних прогнози або внутрішніх образах. Навіть короткі паузи протягом дня, коли ви усвідомлено звертаєте увагу на те, що відбувається навколо — спів птахів, відчуття землі під ногами, смак кави — допомагають відновити внутрішню рівновагу і знижують надлишкову напругу. /n Когнітивно-поведінкова терапія (КПТ) пропонує важливий підхід до розуміння і трансформації тривоги. В її основі лежить ідея, що саме наші думки формують емоції і поведінку. Коли ми вчимося помічати автоматичні негативні думки і ставити їх під сумнів, тривога починає поступово відступати. Наприклад, замість думки «Я не впораюся», варто спробувати замінити її на запитання «Чи є докази того, що я вже не був у складних ситуаціях і успішно їх вирішував?». Такі внутрішні діалоги сприяють формуванню більш конструктивного й чутливого ставлення до себе. /n Підсумовуючи, варто наголосити, що тривога — це природна реакція організму, але вона не повинна визначати повністю наше життя. Крок за кроком, з використанням різних методів усвідомленого дихання, ведення щоденника, практик майндфулнес і когнітивних технік, можна навчитися знаходити внутрішній спокій навіть у моменти напруги. Пам’ятайте: турбота про себе не менш важлива, ніж будь-які інші справи. Дозвольте собі проходити цей шлях з ніжністю і терпінням, а ваша внутрішня сила зробить решту. /n Ви не самі, і кожен крок у напрямку до спокою — це вже перемога."
           },
           "rate": {
             "description": "Article's rating",
@@ -861,6 +1121,61 @@
           "hasPreviousPage": {
             "type": "boolean",
             "example": false
+          }
+        }
+      },
+      "newArticle": {
+        "type": "object",
+        "required": [
+          "_id",
+          "image",
+          "title",
+          "desc",
+          "article",
+          "rate",
+          "date",
+          "ownerId"
+        ],
+        "properties": {
+          "_id": {
+            "description": "Article's id",
+            "type": "string",
+            "example": "68855dd9f76d12b4e738412e"
+          },
+          "image": {
+            "description": "Article's image",
+            "type": "string",
+            "example": "https://ftp.goit.study/img/harmoniq/f12e886489f94b5886d03e95vn.jpg"
+          },
+          "title": {
+            "description": "Article's title",
+            "type": "string",
+            "example": "Коли тривога заповнює простір: шлях до спокою"
+          },
+          "desc": {
+            "description": "Article's description",
+            "type": "string",
+            "example": "Медитації, які допомагають відновити внутрішній спокій"
+          },
+          "article": {
+            "description": "Main Article's part",
+            "type": "string",
+            "example": "Тривога — це відчуття, яке всі ми час від часу переживаємо. Вона може проявлятися як невизначене занепокоєння, підсилене серцебиття або внутрішня напруга, що не дає спокою. Коли тривога заповнює наш внутрішній простір, здається, що неможливо знайти затишок навіть у найпростіших моментах життя. Проте важливо пам’ятати, що це не кінець і не вирок. Шлях до спокою доступний кожному, і він часто починається з усвідомленого ставлення до себе і свого стану. /n Розпочати цей шлях можна з простих, але ефективних методів, що допомагають повернути контроль над власними емоціями. Одним із таких є усвідомлене дихання. Коли тривога з’являється, наше дихання часто стає поверхневим і прискореним, що лише підсилює напругу. Зосередившись на глибоких, повільних вдихах і видихах, можна стабілізувати роботу нервової системи і зменшити інтенсивність тривожних відчуттів. Наприклад, техніка «4-7-8» передбачає вдих на рахунок чотири, затримку дихання на сім секунд та повільний видих на вісім. Практикуючи таке дихання регулярно, ви не лише швидко полегшите стан у момент тривоги, а й з часом навчитеся реагувати на стрес більш спокійно. /n Іншим важливим інструментом є ведення щоденника. Записування своїх думок і емоцій допомагає краще їх усвідомити і впорядкувати. Часто тривога живиться хаотичними, негативними припущеннями і сценаріями майбутнього, які виникають у нашій уяві. Коли ви викладаєте ці думки на папір, вони втрачають свою силу та стають більш зрозумілими. У щоденнику можна не лише описувати тривожні переживання, але й відмічати моменти спокою, вдячності, успіху — це допомагає збалансувати емоційний фон і побачити, що життя не складається лише з напруги. /n Практики майндфулнес також є надзвичайно корисними у боротьбі з тривогою. Вони вчать зупинятися у теперішньому моменті, звертати увагу на свої відчуття, думки і навколишнє середовище без осуду. Це ніби тренування для розуму, яке дозволяє не зациклюватися на тривожних прогнози або внутрішніх образах. Навіть короткі паузи протягом дня, коли ви усвідомлено звертаєте увагу на те, що відбувається навколо — спів птахів, відчуття землі під ногами, смак кави — допомагають відновити внутрішню рівновагу і знижують надлишкову напругу. /n Когнітивно-поведінкова терапія (КПТ) пропонує важливий підхід до розуміння і трансформації тривоги. В її основі лежить ідея, що саме наші думки формують емоції і поведінку. Коли ми вчимося помічати автоматичні негативні думки і ставити їх під сумнів, тривога починає поступово відступати. Наприклад, замість думки «Я не впораюся», варто спробувати замінити її на запитання «Чи є докази того, що я вже не був у складних ситуаціях і успішно їх вирішував?». Такі внутрішні діалоги сприяють формуванню більш конструктивного й чутливого ставлення до себе. /n Підсумовуючи, варто наголосити, що тривога — це природна реакція організму, але вона не повинна визначати повністю наше життя. Крок за кроком, з використанням різних методів усвідомленого дихання, ведення щоденника, практик майндфулнес і когнітивних технік, можна навчитися знаходити внутрішній спокій навіть у моменти напруги. Пам’ятайте: турбота про себе не менш важлива, ніж будь-які інші справи. Дозвольте собі проходити цей шлях з ніжністю і терпінням, а ваша внутрішня сила зробить решту. /n Ви не самі, і кожен крок у напрямку до спокою — це вже перемога."
+          },
+          "rate": {
+            "description": "Article's rating",
+            "type": "number",
+            "example": 16
+          },
+          "date": {
+            "description": "Article's publishing date",
+            "type": "string",
+            "example": "2025-03-27T00:00:00.000Z"
+          },
+          "ownerId": {
+            "description": "Article owner's id",
+            "type": "string",
+            "example": "68855485f76d12b4e7384005"
           }
         }
       },
@@ -922,10 +1237,121 @@
           "saved": {
             "description": "How much of which articles(shown in articleIds) have been saved by a person",
             "type": "array",
-            "example": [
-              "68855dd9f76d12b4e7384185",
-              "68855dd9f76d12b4e738412f"
-            ]
+            "items": {
+              "type": "string",
+              "example": "68855dd9f76d12b4e7384185"
+            }
+          }
+        }
+      },
+      "foundUser": {
+        "type": "object",
+        "required": [
+          "saved",
+          "_id",
+          "name",
+          "avatarUrl",
+          "articlesAmount"
+        ],
+        "properties": {
+          "saved": {
+            "description": "How much of which articles(shown in articleIds) have been saved by a person",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "6881563901add19ee16fd041"
+            }
+          },
+          "_id": {
+            "description": "User's Id",
+            "type": "string",
+            "example": "68855485f76d12b4e7384005"
+          },
+          "name": {
+            "description": "User's name",
+            "type": "string",
+            "example": "User228"
+          },
+          "avatarUrl": {
+            "description": "Url of User's avatar",
+            "type": "string",
+            "example": "https://ftp.goit.study/img/harmoniq/users/6881563901add19ee16fd041.webp"
+          },
+          "articlesAmount": {
+            "description": "How much articles has a person created",
+            "type": "number",
+            "example": 2
+          }
+        }
+      },
+      "patchedUser": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "saved",
+          "avatarUrl",
+          "articlesAmount"
+        ],
+        "properties": {
+          "_id": {
+            "description": "User's Id",
+            "type": "string",
+            "example": "68855485f76d12b4e7384005"
+          },
+          "name": {
+            "description": "User's name",
+            "type": "string",
+            "example": "User228"
+          },
+          "saved": {
+            "description": "How much of which articles(shown in articleIds) have been saved by a person",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "68855dd9f76d12b4e7384185"
+            }
+          },
+          "avatarUrl": {
+            "description": "Url of User's avatar",
+            "type": "string",
+            "example": "https://ftp.goit.study/img/harmoniq/users/6881563901add19ee16fd041.webp"
+          },
+          "articlesAmount": {
+            "description": "How much articles has a person created",
+            "type": "number",
+            "example": 2
+          }
+        }
+      },
+      "popularUser": {
+        "type": "object",
+        "required": [
+          "_id",
+          "name",
+          "avatarUrl",
+          "articlesAmount"
+        ],
+        "properties": {
+          "_id": {
+            "description": "User's Id",
+            "type": "string",
+            "example": "68855485f76d12b4e7384005"
+          },
+          "name": {
+            "description": "User's name",
+            "type": "string",
+            "example": "User228"
+          },
+          "avatarUrl": {
+            "description": "Url of User's avatar",
+            "type": "string",
+            "example": "https://ftp.goit.study/img/harmoniq/users/6881563901add19ee16fd041.webp"
+          },
+          "articlesAmount": {
+            "description": "How much articles has a person created",
+            "type": "number",
+            "example": 19
           }
         }
       }

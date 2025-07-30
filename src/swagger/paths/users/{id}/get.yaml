@@ -14,7 +14,7 @@ parameters:
       example: '68855485f76d12b4e7384005'
 responses:
   '200':
-    description: 'User with 68855485f76d12b4e7384005 successfully found'
+    description: 'User with {userId} successfully found'
     content:
       application/json:
         schema:
@@ -33,13 +33,36 @@ responses:
               example: 'User with 68855485f76d12b4e7384005 successfully found'
             user:
               type: object
-              $ref: '../../../components/schemas/user.yaml'
+              $ref: '../../../components/schemas/foundUser.yaml'
             userArticles:
               description: 'How much and what articles have been created by the user'
+              type: array
+              items:
+                $ref: '../../../components/schemas/article.yaml'
+            savedArticles:
+              description: 'How much of which articles have been saved by the user'
               type: array
               items:
                 $ref: '../../../components/schemas/article.yaml'
   '401':
     $ref: '../../../components/responses/401.yaml'
   '404':
-    $ref: '../../../components/responses/404.yaml'
+    description: 'User not found'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: 'User not found'
+            data:
+              type: object
+              example: {}

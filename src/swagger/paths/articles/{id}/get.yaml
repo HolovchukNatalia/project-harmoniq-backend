@@ -14,7 +14,7 @@ parameters:
       example: '6687bd0b07d349529f997ba9'
 responses:
   '200':
-    description: 'Successfully found article with id 6687bd0b07d349529f997ba9!'
+    description: 'Successfully found article with id {articleId}!'
     content:
       application/json:
         schema:
