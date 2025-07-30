@@ -1,0 +1,56 @@
+tags:
+  - Users
+summary: Update user by id
+operationId: cleanUser
+description: 'Update user by id'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: userId
+    required: true
+    schema:
+      type: string
+      example: '6687bd0b07d349529f997ba9'
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        properties:
+          name:
+            description: "Contact's name"
+            type: string
+            example: Valera
+          saved:
+            description: "Contact's saved-array"
+            type: array
+            items:
+              example: ['6687bd0b07d349529f997ba9', '2466h34534b37392003ba11s']
+responses:
+  '200':
+    description: 'Successfully updated user profile'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully updated user profile'
+            data:
+              type: object
+              properties:
+                user:
+                  $ref: '../../../components/schemas/patchedUser.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'

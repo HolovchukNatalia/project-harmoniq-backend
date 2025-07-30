@@ -1,0 +1,42 @@
+tags:
+  - Users
+summary: Get a list of most popular users
+operationId: getPopularUsers
+description: 'Get a list of most popular articles by articlesAmount'
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    description: 'How much popular users should be shown'
+    name: limit
+    required: true
+    schema:
+      type: string
+      example: '10'
+responses:
+  '200':
+    description: 'Top {limit} users sorted by articlesAmount'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Top 5 users sorted by articlesAmount'
+            data:
+              type: object
+              properties:
+                users:
+                  type: array
+                  items:
+                    $ref: '../../../components/schemas/popularUser.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'

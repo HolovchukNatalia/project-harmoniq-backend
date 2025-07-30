@@ -1,7 +1,7 @@
 type: object
 required:
   - _id
-  - img
+  - image
   - title
   - desc
   - article
@@ -13,7 +13,7 @@ properties:
     description: "Article's id"
     type: string
     example: '68855dd9f76d12b4e738412e'
-  img:
+  image:
     description: "Article's image"
     type: string
     example: 'https://ftp.goit.study/img/harmoniq/f12e886489f94b5886d03e95vn.jpg'

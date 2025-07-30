@@ -27,6 +27,9 @@ paths:
       $ref: '../src/swagger/paths/articles/{id}/get.yaml'
     delete:
       $ref: '../src/swagger/paths/articles/{id}/delete.yaml'
+  /articles/popular:
+    get:
+      $ref: '../src/swagger/paths/articles/popular/get.yaml'
   /auth/register:
     post:
       $ref: '../src/swagger/paths/auth/register/post.yaml'
@@ -45,9 +48,14 @@ paths:
   /users/{userId}:
     get:
       $ref: '../src/swagger/paths/users/{id}/get.yaml'
+    patch:
+      $ref: '../src/swagger/paths/users/{id}/patch.yaml'
   /users/{userId}/save/{articleId}:
     post:
       $ref: '../src/swagger/paths/users/{id}/saveArticles/post.yaml'
+  /users/popular:
+    get:
+      $ref: '../src/swagger/paths/users/popular/get.yaml'
 components:
   securitySchemes:
     bearerAuth:
