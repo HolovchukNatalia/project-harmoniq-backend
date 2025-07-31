@@ -3,8 +3,7 @@ tags:
 summary: Get a single article by id
 operationId: getArticleById
 description: 'Get an article by id'
-security:
-  - bearerAuth: []
+security: []
 parameters:
   - in: path
     name: articleId
@@ -33,7 +32,5 @@ responses:
             article:
               type: object
               $ref: '../../../components/schemas/article.yaml'
-  '401':
-    $ref: '../../../components/responses/401.yaml'
   '404':
     $ref: '../../../components/responses/404.yaml'

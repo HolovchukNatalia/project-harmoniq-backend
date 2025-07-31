@@ -40,11 +40,7 @@
         "summary": "Get a whole list of articles",
         "operationId": "getAllArticles",
         "description": "Get list of all articles with this endpoint",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [],
         "parameters": [
           {
             "in": "query",
@@ -99,9 +95,6 @@
                 }
               }
             }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
           }
         }
       },
@@ -119,7 +112,7 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "type": "object",
                 "required": [
@@ -151,7 +144,7 @@
                   "desc": {
                     "description": "Article's description",
                     "type": "string",
-                    "minLength": 10,
+                    "minLength": 5,
                     "maxLength": 100,
                     "example": "Медитації, які допомагають відновити внутрішній спокій"
                   },
@@ -229,11 +222,7 @@
         "summary": "Get a single article by id",
         "operationId": "getArticleById",
         "description": "Get an article by id",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [],
         "parameters": [
           {
             "in": "path",
@@ -274,9 +263,6 @@
                 }
               }
             }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
           },
           "404": {
             "$ref": "#/components/responses/404"
@@ -327,11 +313,7 @@
         "summary": "Get a list of most popular articles",
         "operationId": "getPopularArticlesService",
         "description": "Get a list of most popular articles",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [],
         "parameters": [
           {
             "in": "query",
@@ -380,9 +362,6 @@
                 }
               }
             }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
           }
         }
       }
@@ -395,11 +374,7 @@
         "summary": "User Registration",
         "operationId": "registerUserService",
         "description": "Register a new user with email and password",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [],
         "requestBody": {
           "required": true,
           "content": {
@@ -414,17 +389,23 @@
                 "properties": {
                   "name": {
                     "description": "User's name",
+                    "minLength": 2,
+                    "maxLength": 32,
                     "type": "string",
                     "example": "User228"
                   },
                   "email": {
                     "description": "User's email",
                     "type": "string",
+                    "maxLength": 64,
+                    "format": "email",
                     "example": "user@example.com"
                   },
                   "password": {
                     "description": "User's password",
                     "type": "string",
+                    "minLength": 8,
+                    "maxLength": 64,
                     "format": "password",
                     "example": "password123"
                   }
@@ -462,8 +443,47 @@
               }
             }
           },
-          "401": {
-            "$ref": "#/components/responses/401"
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation Error"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "field",
+                        "message"
+                      ],
+                      "properties": {
+                        "field": {
+                          "type": "string",
+                          "example": "email"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Email is required"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "409": {
             "$ref": "#/components/responses/409"
@@ -479,11 +499,7 @@
         "summary": "User Login",
         "operationId": "loginUser",
         "description": "Log in a user with email and password",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [],
         "requestBody": {
           "required": true,
           "content": {
@@ -498,11 +514,15 @@
                   "email": {
                     "description": "User's email",
                     "type": "string",
+                    "maxLength": 64,
+                    "format": "email",
                     "example": "user@example.com"
                   },
                   "password": {
                     "description": "User's password",
                     "type": "string",
+                    "minLength": 8,
+                    "maxLength": 64,
                     "format": "password",
                     "example": "password123"
                   }
@@ -549,8 +569,71 @@
               }
             }
           },
+          "400": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation Error"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "field",
+                        "message"
+                      ],
+                      "properties": {
+                        "field": {
+                          "type": "string",
+                          "example": "email"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Email is required"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
           "401": {
-            "$ref": "#/components/responses/401"
+            "description": "User or password doesn`t match",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 401
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "User or password doesn`t match"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -563,17 +646,10 @@
         "summary": "User Logout",
         "operationId": "logoutUser",
         "description": "Log out a user by clearing session cookies",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [],
         "responses": {
           "204": {
             "description": "No Content"
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
           }
         }
       }
@@ -586,11 +662,7 @@
         "summary": "Refresh User session",
         "operationId": "refreshSession",
         "description": "Refresh the user session and get a new access token",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [],
         "responses": {
           "200": {
             "description": "Successfully refreshed a session!",
@@ -628,9 +700,6 @@
                 }
               }
             }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
           }
         }
       }
@@ -643,11 +712,7 @@
         "summary": "Get a whole list of users",
         "operationId": "allUsersInfoService",
         "description": "Get a whole list of all users with this endpoint",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [],
         "responses": {
           "200": {
             "description": "Users retrieved successfully",
@@ -683,9 +748,6 @@
                 }
               }
             }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
           }
         }
       }
@@ -698,11 +760,7 @@
         "summary": "Get a single user by id",
         "operationId": "userInfoService",
         "description": "Get a user by id",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [],
         "parameters": [
           {
             "in": "path",
@@ -738,7 +796,7 @@
                     },
                     "user": {
                       "type": "object",
-                      "$ref": "#/components/schemas/foundUser"
+                      "$ref": "#/components/schemas/user"
                     },
                     "userArticles": {
                       "description": "How much and what articles have been created by the user",
@@ -758,9 +816,6 @@
                 }
               }
             }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
           },
           "404": {
             "description": "User not found",
@@ -824,6 +879,8 @@
                 "properties": {
                   "name": {
                     "description": "Contact's name",
+                    "minLength": 2,
+                    "maxLength": 32,
                     "type": "string",
                     "example": "Valera"
                   },
@@ -836,6 +893,17 @@
                         "2466h34534b37392003ba11s"
                       ]
                     }
+                  },
+                  "avatarUrl": {
+                    "description": "Contact's avatar URL",
+                    "type": "string",
+                    "example": "https://ftp.goit.study/img/harmoniq/users/6881563901add19ee16fd00a.webp"
+                  },
+                  "articlesAmount": {
+                    "description": "Contact's article amount",
+                    "minLength": 0,
+                    "type": "number",
+                    "example": 10
                   }
                 }
               }
@@ -867,7 +935,7 @@
                       "type": "object",
                       "properties": {
                         "user": {
-                          "$ref": "#/components/schemas/patchedUser"
+                          "$ref": "#/components/schemas/user"
                         }
                       }
                     }
@@ -892,7 +960,7 @@
         ],
         "summary": "Save an article for a user by Ids",
         "operationId": "saveArticleToUserServise",
-        "description": "Delete an article for a user by Ids",
+        "description": "Save an article for a logged-in user by Ids",
         "security": [
           {
             "bearerAuth": []
@@ -951,6 +1019,145 @@
           },
           "404": {
             "$ref": "#/components/responses/404"
+          },
+          "409": {
+            "description": "Article already saved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 409
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Article already saved"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Delete an article from a user by Ids",
+        "operationId": "deleteArticleFromUserService",
+        "description": "Delete an article from a logged-in user by Ids",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "6885f9804c4583960e7188e7"
+            }
+          },
+          {
+            "in": "path",
+            "name": "articleId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "68855dd9f76d12b4e738416a"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Article successfully removed from saved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Article successfully removed from saved"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "You are not allowed to delete article from another user"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Article not found in saved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Article not found in saved"
+                    },
+                    "data": {
+                      "type": "object",
+                      "example": {}
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -963,11 +1170,7 @@
         "summary": "Get a list of most popular users",
         "operationId": "getPopularUsers",
         "description": "Get a list of most popular articles by articlesAmount",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
+        "security": [],
         "parameters": [
           {
             "in": "query",
@@ -1007,7 +1210,7 @@
                         "users": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/popularUser"
+                            "$ref": "#/components/schemas/user"
                           }
                         }
                       }
@@ -1016,9 +1219,6 @@
                 }
               }
             }
-          },
-          "401": {
-            "$ref": "#/components/responses/401"
           }
         }
       }
@@ -1241,117 +1441,6 @@
               "type": "string",
               "example": "68855dd9f76d12b4e7384185"
             }
-          }
-        }
-      },
-      "foundUser": {
-        "type": "object",
-        "required": [
-          "saved",
-          "_id",
-          "name",
-          "avatarUrl",
-          "articlesAmount"
-        ],
-        "properties": {
-          "saved": {
-            "description": "How much of which articles(shown in articleIds) have been saved by a person",
-            "type": "array",
-            "items": {
-              "type": "string",
-              "example": "6881563901add19ee16fd041"
-            }
-          },
-          "_id": {
-            "description": "User's Id",
-            "type": "string",
-            "example": "68855485f76d12b4e7384005"
-          },
-          "name": {
-            "description": "User's name",
-            "type": "string",
-            "example": "User228"
-          },
-          "avatarUrl": {
-            "description": "Url of User's avatar",
-            "type": "string",
-            "example": "https://ftp.goit.study/img/harmoniq/users/6881563901add19ee16fd041.webp"
-          },
-          "articlesAmount": {
-            "description": "How much articles has a person created",
-            "type": "number",
-            "example": 2
-          }
-        }
-      },
-      "patchedUser": {
-        "type": "object",
-        "required": [
-          "_id",
-          "name",
-          "saved",
-          "avatarUrl",
-          "articlesAmount"
-        ],
-        "properties": {
-          "_id": {
-            "description": "User's Id",
-            "type": "string",
-            "example": "68855485f76d12b4e7384005"
-          },
-          "name": {
-            "description": "User's name",
-            "type": "string",
-            "example": "User228"
-          },
-          "saved": {
-            "description": "How much of which articles(shown in articleIds) have been saved by a person",
-            "type": "array",
-            "items": {
-              "type": "string",
-              "example": "68855dd9f76d12b4e7384185"
-            }
-          },
-          "avatarUrl": {
-            "description": "Url of User's avatar",
-            "type": "string",
-            "example": "https://ftp.goit.study/img/harmoniq/users/6881563901add19ee16fd041.webp"
-          },
-          "articlesAmount": {
-            "description": "How much articles has a person created",
-            "type": "number",
-            "example": 2
-          }
-        }
-      },
-      "popularUser": {
-        "type": "object",
-        "required": [
-          "_id",
-          "name",
-          "avatarUrl",
-          "articlesAmount"
-        ],
-        "properties": {
-          "_id": {
-            "description": "User's Id",
-            "type": "string",
-            "example": "68855485f76d12b4e7384005"
-          },
-          "name": {
-            "description": "User's name",
-            "type": "string",
-            "example": "User228"
-          },
-          "avatarUrl": {
-            "description": "Url of User's avatar",
-            "type": "string",
-            "example": "https://ftp.goit.study/img/harmoniq/users/6881563901add19ee16fd041.webp"
-          },
-          "articlesAmount": {
-            "description": "How much articles has a person created",
-            "type": "number",
-            "example": 19
           }
         }
       }

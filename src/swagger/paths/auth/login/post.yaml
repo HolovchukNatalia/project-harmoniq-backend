@@ -3,8 +3,7 @@ tags:
 summary: User Login
 operationId: loginUser
 description: 'Log in a user with email and password'
-security:
-  - bearerAuth: []
+security: []
 requestBody:
   required: true
   content:
@@ -18,10 +17,14 @@ requestBody:
           email:
             description: "User's email"
             type: string
+            maxLength: 64
+            format: email
             example: 'user@example.com'
           password:
             description: "User's password"
             type: string
+            minLength: 8
+            maxLength: 64
             format: password
             example: 'password123'
 responses:
@@ -50,5 +53,48 @@ responses:
                 accessToken:
                   type: string
                   example: 'Bearer token_string'
+  '400':
+    description: Validation error
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: Validation Error
+            data:
+              type: object
+              required:
+                - field
+                - message
+              properties:
+                field:
+                  type: string
+                  example: 'email'
+                message:
+                  type: string
+                  example: 'Email is required'
   '401':
-    $ref: '../../../components/responses/401.yaml'
+    description: 'User or password doesn`t match'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: 'User or password doesn`t match'

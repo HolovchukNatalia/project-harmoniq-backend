@@ -20,6 +20,8 @@ requestBody:
         properties:
           name:
             description: "Contact's name"
+            minLength: 2
+            maxLength: 32
             type: string
             example: Valera
           saved:
@@ -27,6 +29,15 @@ requestBody:
             type: array
             items:
               example: ['6687bd0b07d349529f997ba9', '2466h34534b37392003ba11s']
+          avatarUrl:
+            description: "Contact's avatar URL"
+            type: string
+            example: 'https://ftp.goit.study/img/harmoniq/users/6881563901add19ee16fd00a.webp'
+          articlesAmount:
+            description: "Contact's article amount"
+            minLength: 0
+            type: number
+            example: 10
 responses:
   '200':
     description: 'Successfully updated user profile'
@@ -49,7 +60,7 @@ responses:
               type: object
               properties:
                 user:
-                  $ref: '../../../components/schemas/patchedUser.yaml'
+                  $ref: '../../../components/schemas/user.yaml'
   '401':
     $ref: '../../../components/responses/401.yaml'
   '404':

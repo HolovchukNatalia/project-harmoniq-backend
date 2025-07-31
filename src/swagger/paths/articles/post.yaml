@@ -7,7 +7,7 @@ security:
   - bearerAuth: []
 requestBody:
   content:
-    application/json:
+    multipart/form-data:
       schema:
         type: object
         required:
@@ -35,7 +35,7 @@ requestBody:
           desc:
             description: "Article's description"
             type: string
-            minLength: 10
+            minLength: 5
             maxLength: 100
             example: 'Медитації, які допомагають відновити внутрішній спокій'
           article:

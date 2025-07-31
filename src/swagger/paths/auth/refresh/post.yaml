@@ -3,8 +3,7 @@ tags:
 summary: Refresh User session
 operationId: refreshSession
 description: 'Refresh the user session and get a new access token'
-security:
-  - bearerAuth: []
+security: []
 responses:
   '200':
     description: 'Successfully refreshed a session!'
@@ -31,5 +30,3 @@ responses:
                 accessToken:
                   type: string
                   example: 'Bearer token_string'
-  '401':
-    $ref: '../../../components/responses/401.yaml'

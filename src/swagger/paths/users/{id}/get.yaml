@@ -3,8 +3,7 @@ tags:
 summary: Get a single user by id
 operationId: userInfoService
 description: 'Get a user by id'
-security:
-  - bearerAuth: []
+security: []
 parameters:
   - in: path
     name: userId
@@ -33,7 +32,7 @@ responses:
               example: 'User with 68855485f76d12b4e7384005 successfully found'
             user:
               type: object
-              $ref: '../../../components/schemas/foundUser.yaml'
+              $ref: '../../../components/schemas/user.yaml'
             userArticles:
               description: 'How much and what articles have been created by the user'
               type: array
@@ -44,8 +43,6 @@ responses:
               type: array
               items:
                 $ref: '../../../components/schemas/article.yaml'
-  '401':
-    $ref: '../../../components/responses/401.yaml'
   '404':
     description: 'User not found'
     content:
