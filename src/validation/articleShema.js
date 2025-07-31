@@ -13,7 +13,7 @@ export const articleSchema = Joi.object({
     'string.max': 'Title must not exceed 120 characters',
   }),
 
-  desc: Joi.string().min(5).max(100),
+  desc: Joi.string().min(5).required().max(100),
 
   article: Joi.string().min(100).required().messages({
     'any.required': 'Text is required',

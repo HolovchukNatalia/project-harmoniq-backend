@@ -10,6 +10,7 @@ import { patchUserProfileController } from '../controllers/users/patchUserProfil
 import { getUsersAllController } from '../controllers/users/getUsersAllController.js';
 import { getUserByIdController } from '../controllers/users/getUserByIdController.js';
 import { getPopularUsersController } from '../controllers/users/getPopularUsersController.js';
+import { deleteArticleFromUserController } from '../controllers/users/deleteArticleFromUserController.js';
 
 const upload = multer({ dest: 'uploads/' });
 
@@ -32,6 +33,12 @@ router.patch(
   upload.single('image'),
   validateBody(updateUserSchema),
   ctrlWrapper(patchUserProfileController),
+);
+
+router.delete(
+  '/:userId/save/:articleId',
+  authenticate,
+  ctrlWrapper(deleteArticleFromUserController),
 );
 
 export default router;
