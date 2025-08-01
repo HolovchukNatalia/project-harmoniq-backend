@@ -21,7 +21,7 @@ responses:
           required:
             - status
             - message
-            - article
+            - data
           properties:
             status:
               type: integer
@@ -29,8 +29,11 @@ responses:
             message:
               type: string
               example: Successfully found article with id 68855dd9f76d12b4e7384136!
-            article:
+            data:
               type: object
-              $ref: '../../../components/schemas/article.yaml'
+              properties:
+                article:
+                  type: object
+                  $ref: '../../../components/schemas/article.yaml'
   '404':
     $ref: '../../../components/responses/404.yaml'

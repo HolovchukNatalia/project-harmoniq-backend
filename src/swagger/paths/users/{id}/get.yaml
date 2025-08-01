@@ -21,8 +21,7 @@ responses:
           required:
             - status
             - message
-            - user
-            - userArticles
+            - data
           properties:
             status:
               type: integer
@@ -30,19 +29,24 @@ responses:
             message:
               type: string
               example: 'User with 68855485f76d12b4e7384005 successfully found'
-            user:
+            data:
               type: object
-              $ref: '../../../components/schemas/user.yaml'
-            userArticles:
-              description: 'How much and what articles have been created by the user'
-              type: array
-              items:
-                $ref: '../../../components/schemas/article.yaml'
-            savedArticles:
-              description: 'How much of which articles have been saved by the user'
-              type: array
-              items:
-                $ref: '../../../components/schemas/article.yaml'
+              required:
+                - user
+                - userArticles
+                - savedArticles
+              properties:
+                user:
+                  type: object
+                  $ref: '../../../components/schemas/user.yaml'
+                userArticles:
+                  type: array
+                  items:
+                    $ref: '../../../components/schemas/article.yaml'
+                savedArticles:
+                  type: array
+                  items:
+                    $ref: '../../../components/schemas/article.yaml'
   '404':
     description: 'User not found'
     content:

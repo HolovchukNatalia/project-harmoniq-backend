@@ -25,7 +25,7 @@ responses:
           required:
             - status
             - message
-            - articles
+            - data
             - paginationData
           properties:
             status:
@@ -34,10 +34,13 @@ responses:
             message:
               type: string
               example: Successfully retrieved articles
-            articles:
-              type: array
-              items:
-                $ref: ../../components/schemas/article.yaml
+            data:
+              type: object
+              properties:
+                articles:
+                  type: array
+                  items:
+                    $ref: ../../components/schemas/article.yaml
             paginationData:
               type: object
               $ref: ../../components/schemas/pagination.yaml

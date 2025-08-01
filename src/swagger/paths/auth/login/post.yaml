@@ -49,10 +49,24 @@ responses:
               type: object
               required:
                 - accessToken
+                - user
+                - userArticles
+                - savedArticles
               properties:
                 accessToken:
                   type: string
                   example: 'Bearer token_string'
+                user:
+                  type: object
+                  $ref: '../../../components/schemas/user.yaml'
+                userArticles:
+                  type: array
+                  items:
+                    $ref: '../../../components/schemas/article.yaml'
+                savedArticles:
+                  type: array
+                  items:
+                    $ref: '../../../components/schemas/article.yaml'
   '400':
     description: Validation error
     content:
@@ -66,7 +80,7 @@ responses:
           properties:
             status:
               type: integer
-              example: 401
+              example: 400
             message:
               type: string
               example: Validation Error
