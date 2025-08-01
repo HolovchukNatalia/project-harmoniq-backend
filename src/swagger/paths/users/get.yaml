@@ -3,8 +3,7 @@ tags:
 summary: Get a whole list of users
 operationId: allUsersInfoService
 description: 'Get a whole list of all users with this endpoint'
-security:
-  - bearerAuth: []
+security: []
 responses:
   '200':
     description: 'Users retrieved successfully'
@@ -15,7 +14,8 @@ responses:
           required:
             - status
             - message
-            - users
+            - data
+            - paginationData
           properties:
             status:
               type: integer
@@ -23,12 +23,13 @@ responses:
             message:
               type: string
               example: Users retrieved successfully
-            users:
-              type: array
-              items:
-                $ref: ../../components/schemas/user.yaml
+            data:
+              type: object
+              properties:
+                users:
+                  type: array
+                  items:
+                    $ref: ../../components/schemas/user.yaml
             paginationData:
               type: object
               $ref: ../../components/schemas/pagination.yaml
-  '401':
-    $ref: '../../components/responses/401.yaml'

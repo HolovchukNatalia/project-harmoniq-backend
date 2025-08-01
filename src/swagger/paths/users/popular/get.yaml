@@ -3,8 +3,7 @@ tags:
 summary: Get a list of most popular users
 operationId: getPopularUsers
 description: 'Get a list of most popular articles by articlesAmount'
-security:
-  - bearerAuth: []
+security: []
 parameters:
   - in: query
     description: 'How much popular users should be shown'
@@ -37,6 +36,4 @@ responses:
                 users:
                   type: array
                   items:
-                    $ref: '../../../components/schemas/popularUser.yaml'
-  '401':
-    $ref: '../../../components/responses/401.yaml'
+                    $ref: '../../../components/schemas/user.yaml'

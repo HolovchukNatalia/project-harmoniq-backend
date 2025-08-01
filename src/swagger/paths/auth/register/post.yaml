@@ -3,8 +3,7 @@ tags:
 summary: User Registration
 operationId: registerUserService
 description: 'Register a new user with email and password'
-security:
-  - bearerAuth: []
+security: []
 requestBody:
   required: true
   content:
@@ -18,15 +17,21 @@ requestBody:
         properties:
           name:
             description: "User's name"
+            minLength: 2
+            maxLength: 32
             type: string
             example: 'User228'
           email:
             description: "User's email"
             type: string
+            maxLength: 64
+            format: email
             example: 'user@example.com'
           password:
             description: "User's password"
             type: string
+            minLength: 8
+            maxLength: 64
             format: password
             example: 'password123'
 responses:
@@ -49,7 +54,34 @@ responses:
               example: Successfully registered a user!
             data:
               $ref: ../../../components/schemas/auth.yaml
+  '400':
+    description: Validation error
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: Validation Error
+            data:
+              type: object
+              required:
+                - field
+                - message
+              properties:
+                field:
+                  type: string
+                  example: 'email'
+                message:
+                  type: string
+                  example: 'Email is required'
   '409':
     $ref: '../../../components/responses/409.yaml'
-  '401':
-    $ref: '../../../components/responses/401.yaml'

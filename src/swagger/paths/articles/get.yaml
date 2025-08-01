@@ -3,8 +3,7 @@ tags:
 summary: Get a whole list of articles
 operationId: getAllArticles
 description: 'Get list of all articles with this endpoint'
-security:
-  - bearerAuth: []
+security: []
 parameters:
   - in: query
     name: page
@@ -26,7 +25,7 @@ responses:
           required:
             - status
             - message
-            - articles
+            - data
             - paginationData
           properties:
             status:
@@ -35,12 +34,13 @@ responses:
             message:
               type: string
               example: Successfully retrieved articles
-            articles:
-              type: array
-              items:
-                $ref: ../../components/schemas/article.yaml
+            data:
+              type: object
+              properties:
+                articles:
+                  type: array
+                  items:
+                    $ref: ../../components/schemas/article.yaml
             paginationData:
               type: object
               $ref: ../../components/schemas/pagination.yaml
-  '401':
-    $ref: '../../components/responses/401.yaml'
