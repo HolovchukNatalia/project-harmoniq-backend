@@ -2,7 +2,7 @@ import createHttpError from 'http-errors';
 import { logoutUser } from '../../services/auth/logoutUserService.js';
 import { clearSecureCookie } from '../../utils/cookie/clearSecureCookie.js';
 
-export const logoutUserController = async (req, res, next) => {
+export const logoutUserController = async (req, res) => {
   const { sessionId, sessionToken } = req.cookies;
 
   if (!sessionId || !sessionToken) {

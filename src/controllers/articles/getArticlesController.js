@@ -4,7 +4,7 @@ import { parsePaginationParams } from '../../utils/parsePaginationParams.js';
 
 const allowedSortMethods = ['all', 'popular'];
 
-export const getArticlesController = async (req, res, next) => {
+export const getArticlesController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
   const { filter: sortMethod } = req.query;
 

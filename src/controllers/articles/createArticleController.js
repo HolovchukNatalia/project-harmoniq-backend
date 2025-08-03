@@ -3,7 +3,7 @@ import { createArticle } from '../../services/articles/articlesCRUD.js';
 import { uploadImageFile } from '../../utils/uploadImageFile.js';
 import { articleSchema } from '../../validation/articleShema.js';
 
-export const createArticleController = async (req, res, next) => {
+export const createArticleController = async (req, res) => {
   const image = await uploadImageFile(req.file);
 
   const updateData = {

@@ -1,7 +1,7 @@
 import createHttpError from 'http-errors';
 import { getArticleById } from '../../services/articles/articlesCRUD.js';
 
-export const getArticleByIdController = async (req, res, next) => {
+export const getArticleByIdController = async (req, res) => {
   const { articleId } = req.params;
 
   if (!articleId) {

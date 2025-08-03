@@ -1,6 +1,6 @@
 import { getPopularArticlesService } from '../../services/articles/getPopularArticlesService.js';
 
-export const getPopularArticlesController = async (req, res, next) => {
+export const getPopularArticlesController = async (req, res) => {
   let limit = parseInt(req.query.limit, 10);
 
   if (isNaN(limit) || limit <= 0) {

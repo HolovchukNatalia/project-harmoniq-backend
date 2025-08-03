@@ -1,6 +1,6 @@
 import { saveArticleToUserServise } from '../../services/users/saveArticleToUserServise.js';
 
-export const saveArticleToUserController = async (req, res, next) => {
+export const saveArticleToUserController = async (req, res) => {
   const { userId, articleId } = req.params;
 
   if (req.user._id.toString() !== userId) {

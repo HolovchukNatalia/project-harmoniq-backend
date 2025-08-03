@@ -4,7 +4,7 @@ import { cleanUser } from '../../utils/cleanUser.js';
 import { setSecureCookie } from '../../utils/cookie/setSecureCookie.js';
 import { getUserContent } from '../../utils/getUserContent.js';
 
-export const loginUserController = async (req, res, next) => {
+export const loginUserController = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     throw createHttpError(400, 'Email and password are required');

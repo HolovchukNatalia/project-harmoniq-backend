@@ -1,7 +1,7 @@
 import createHttpError from 'http-errors';
 import { deleteArticle } from '../../services/articles/articlesCRUD.js';
 
-export const deleteArticleController = async (req, res, next) => {
+export const deleteArticleController = async (req, res) => {
   const { articleId } = req.params;
 
   if (!articleId) {

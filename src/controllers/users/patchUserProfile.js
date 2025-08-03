@@ -4,7 +4,7 @@ import { uploadImageFile } from '../../utils/uploadImageFile.js';
 import { cleanUser } from '../../utils/cleanUser.js';
 import { comparePasswordChanges } from '../../utils/comparePasswordChanges.js';
 
-export const patchUserProfileController = async (req, res, next) => {
+export const patchUserProfileController = async (req, res) => {
   const { userId } = req.params;
 
   const user = await User.findById(userId);

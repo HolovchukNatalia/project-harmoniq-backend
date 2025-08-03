@@ -1,6 +1,6 @@
 import { deleteArticleFromUserService } from '../../services/users/deleteArticleFromUserService.js';
 
-export const deleteArticleFromUserController = async (req, res, next) => {
+export const deleteArticleFromUserController = async (req, res) => {
   const { userId, articleId } = req.params;
 
   if (req.user._id.toString() !== userId) {

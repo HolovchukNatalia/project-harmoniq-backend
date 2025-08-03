@@ -3,7 +3,7 @@ import { registerUserService } from '../../services/auth/registerUserService.js'
 import { cleanUser } from '../../utils/cleanUser.js';
 import { hashPassword } from '../../utils/hashPassword.js';
 
-export const registerUserController = async (req, res, next) => {
+export const registerUserController = async (req, res) => {
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
