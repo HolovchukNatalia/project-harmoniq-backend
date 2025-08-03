@@ -1,12 +1,16 @@
-import bcrypt from 'bcrypt';
 import createHttpError from 'http-errors';
 import { registerUserService } from '../../services/auth/registerUserService.js';
 import { cleanUser } from '../../utils/cleanUser.js';
+import { hashPassword } from '../../utils/hashPassword.js';
 
-export const registerUserController = async (req, res, next) => {
+export const registerUserController = async (req, res) => {
   const { name, email, password } = req.body;
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+  if (!name || !email || !password) {
+    throw createHttpError(400, 'Missing required fields');
+  }
+
+  const hashedPassword = await hashPassword(password);
 
   const user = await registerUserService({
     name,
@@ -15,7 +19,7 @@ export const registerUserController = async (req, res, next) => {
   });
 
   if (!user) {
-    return next(createHttpError(409, 'Email in use'));
+    throw createHttpError(409, 'Email in use');
   }
 
   const cleanedUser = cleanUser(user);
