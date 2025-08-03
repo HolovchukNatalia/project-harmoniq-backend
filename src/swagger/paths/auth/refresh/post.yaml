@@ -32,7 +32,7 @@ responses:
                   type: string
                   example: 'Bearer token_string'
   '401':
-    description: Unauthorized error
+    description: Unauthorized
     content:
       application/json:
         schema:

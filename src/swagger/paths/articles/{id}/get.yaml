@@ -35,5 +35,21 @@ responses:
                 article:
                   type: object
                   $ref: '../../../components/schemas/article.yaml'
+  '400':
+    description: Validation error
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: 'Article ID is required'
   '404':
     $ref: '../../../components/responses/404.yaml'

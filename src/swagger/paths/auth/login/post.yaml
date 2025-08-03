@@ -97,7 +97,7 @@ responses:
                   type: string
                   example: 'Email is required'
   '401':
-    description: 'User or password doesn`t match'
+    description: 'Invalid email or password'
     content:
       application/json:
         schema:
@@ -111,4 +111,4 @@ responses:
               example: 401
             message:
               type: string
-              example: 'User or password doesn`t match'
+              example: 'Invalid email or password'
