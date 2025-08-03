@@ -1,5 +1,4 @@
 import Article from '../../db/models/article.js';
-
 import User from '../../db/models/user.js';
 
 export const getPopularArticlesService = async (limit = 5) => {

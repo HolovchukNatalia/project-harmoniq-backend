@@ -1,3 +1,4 @@
+import createHttpError from 'http-errors';
 import { createArticle } from '../../services/articles/articlesCRUD.js';
 import { uploadImageFile } from '../../utils/uploadImageFile.js';
 import { articleSchema } from '../../validation/articleShema.js';
@@ -12,10 +13,14 @@ export const createArticleController = async (req, res, next) => {
 
   const { error } = articleSchema.validate(updateData);
   if (error) {
-    return res.status(400).json({ status: 400, message: error.message });
+    throw createHttpError(400, error.message);
   }
 
   const article = await createArticle(updateData);
+
+  if (!article) {
+    throw createHttpError(500, 'Failed to create article');
+  }
 
   res.status(201).json({
     status: 201,
