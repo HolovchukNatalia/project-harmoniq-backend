@@ -8,6 +8,7 @@ required:
   - rate
   - date
   - ownerId
+  - author
 properties:
   _id:
     description: "Article's id"
@@ -41,3 +42,7 @@ properties:
     description: "Article owner's id"
     type: string
     example: '68855485f76d12b4e7384005'
+  author:
+    description: "Article owner's name"
+    type: string
+    example: 'Анастасія Олійник'

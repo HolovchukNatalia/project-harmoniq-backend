@@ -3,16 +3,16 @@ tags:
 summary: Get a list of most popular articles
 operationId: getPopularArticlesService
 description: 'Get a list of most popular articles'
-security:
-  - bearerAuth: []
+security: []
 parameters:
   - in: query
     description: 'How much popular articles should be shown'
     name: limit
-    required: true
+    required: false
     schema:
-      type: string
-      example: '10'
+      type: number
+      default: 5
+      example: 10
 responses:
   '200':
     description: 'Top {limit} popular articles'
@@ -38,5 +38,3 @@ responses:
                   type: array
                   items:
                     $ref: '../../../components/schemas/article.yaml'
-  '401':
-    $ref: '../../../components/responses/401.yaml'

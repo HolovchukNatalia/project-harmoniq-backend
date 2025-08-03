@@ -2,7 +2,7 @@ tags:
   - Users
 summary: Save an article for a user by Ids
 operationId: saveArticleToUserServise
-description: Delete an article for a user by Ids
+description: Save an article for a logged-in user by Ids
 security:
   - bearerAuth: []
 parameters:
@@ -41,3 +41,19 @@ responses:
     $ref: '../../../../components/responses/403.yaml'
   '404':
     $ref: '../../../../components/responses/404.yaml'
+  '409':
+    description: 'Article already saved'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 409
+            message:
+              type: string
+              example: 'Article already saved'

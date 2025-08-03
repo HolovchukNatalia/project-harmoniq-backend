@@ -1,0 +1,75 @@
+tags:
+  - Users
+summary: Delete an article from a user by Ids
+operationId: deleteArticleFromUserService
+description: Delete an article from a logged-in user by Ids
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: userId
+    required: true
+    schema:
+      type: string
+      example: '6885f9804c4583960e7188e7'
+  - in: path
+    name: articleId
+    required: true
+    schema:
+      type: string
+      example: '68855dd9f76d12b4e738416a'
+responses:
+  '200':
+    description: 'Article successfully removed from saved'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Article successfully removed from saved'
+  '401':
+    $ref: '../../../../components/responses/401.yaml'
+  '403':
+    description: Forbidden
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 403
+            message:
+              type: string
+              example: 'You are not allowed to delete article from another user'
+  '404':
+    description: 'Article not found in saved'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: 'Article not found in saved'
+            data:
+              type: object
+              example: {}

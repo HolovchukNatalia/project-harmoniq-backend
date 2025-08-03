@@ -3,8 +3,7 @@ tags:
 summary: Get a single article by id
 operationId: getArticleById
 description: 'Get an article by id'
-security:
-  - bearerAuth: []
+security: []
 parameters:
   - in: path
     name: articleId
@@ -22,7 +21,7 @@ responses:
           required:
             - status
             - message
-            - article
+            - data
           properties:
             status:
               type: integer
@@ -30,10 +29,27 @@ responses:
             message:
               type: string
               example: Successfully found article with id 68855dd9f76d12b4e7384136!
-            article:
+            data:
               type: object
-              $ref: '../../../components/schemas/article.yaml'
-  '401':
-    $ref: '../../../components/responses/401.yaml'
+              properties:
+                article:
+                  type: object
+                  $ref: '../../../components/schemas/article.yaml'
+  '400':
+    description: Validation error
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: 'Article ID is required'
   '404':
     $ref: '../../../components/responses/404.yaml'

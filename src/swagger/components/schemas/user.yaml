@@ -21,7 +21,7 @@ properties:
   articlesAmount:
     description: 'How much articles has a person created'
     type: number
-    example: 2
+    example: 1
   saved:
     description: 'How much of which articles(shown in articleIds) have been saved by a person'
     type: array

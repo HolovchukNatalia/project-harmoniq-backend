@@ -32,4 +32,18 @@ responses:
                   type: string
                   example: 'Bearer token_string'
   '401':
-    $ref: '../../../components/responses/401.yaml'
+    description: Unauthorized
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+          properties:
+            status:
+              type: integer
+              example: 401
+            message:
+              type: string
+              example: 'Session not found!'

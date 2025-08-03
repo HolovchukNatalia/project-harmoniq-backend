@@ -14,19 +14,30 @@ parameters:
       example: '6687bd0b07d349529f997ba9'
 requestBody:
   content:
-    multipart/form-data:
+    application/json:
       schema:
         type: object
         properties:
-          name:
-            description: "Contact's name"
+          newName:
+            description: "User's name"
+            minLength: 2
+            maxLength: 32
             type: string
-            example: Valera
-          saved:
-            description: "Contact's saved-array"
-            type: array
-            items:
-              example: ['6687bd0b07d349529f997ba9', '2466h34534b37392003ba11s']
+            example: 'Valera'
+          oldPassword:
+            description: "User's old password"
+            minLength: 6
+            maxLength: 128
+            type: string
+            format: password
+            example: 'password123'
+          newPassword:
+            description: "User's new password"
+            minLength: 6
+            maxLength: 128
+            type: string
+            format: password
+            example: 'Password3214'
 responses:
   '200':
     description: 'Successfully updated user profile'
@@ -49,7 +60,7 @@ responses:
               type: object
               properties:
                 user:
-                  $ref: '../../../components/schemas/patchedUser.yaml'
+                  $ref: '../../../components/schemas/user.yaml'
   '401':
     $ref: '../../../components/responses/401.yaml'
   '404':
