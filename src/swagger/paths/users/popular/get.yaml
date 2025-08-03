@@ -8,10 +8,11 @@ parameters:
   - in: query
     description: 'How much popular users should be shown'
     name: limit
-    required: true
+    required: false
     schema:
-      type: string
-      example: '10'
+      type: number
+      default: 5
+      example: 10
 responses:
   '200':
     description: 'Top {limit} users sorted by articlesAmount'

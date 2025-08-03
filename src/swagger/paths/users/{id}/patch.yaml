@@ -14,16 +14,30 @@ parameters:
       example: '6687bd0b07d349529f997ba9'
 requestBody:
   content:
-    multipart/form-data:
+    application/json:
       schema:
         type: object
         properties:
           newName:
-            description: "Contact's name"
+            description: "User's name"
             minLength: 2
             maxLength: 32
             type: string
-            example: Valera
+            example: 'Valera'
+          oldPassword:
+            description: "User's old password"
+            minLength: 6
+            maxLength: 128
+            type: string
+            format: password
+            example: 'password123'
+          newPassword:
+            description: "User's new password"
+            minLength: 6
+            maxLength: 128
+            type: string
+            format: password
+            example: 'Password3214'
 responses:
   '200':
     description: 'Successfully updated user profile'

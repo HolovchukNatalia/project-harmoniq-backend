@@ -22,14 +22,14 @@ paths:
       $ref: '../src/swagger/paths/articles/get.yaml'
     post:
       $ref: '../src/swagger/paths/articles/post.yaml'
+  /articles/popular:
+    get:
+      $ref: '../src/swagger/paths/articles/popular/get.yaml'
   /articles/{articleId}:
     get:
       $ref: '../src/swagger/paths/articles/{id}/get.yaml'
     delete:
       $ref: '../src/swagger/paths/articles/{id}/delete.yaml'
-  /articles/popular:
-    get:
-      $ref: '../src/swagger/paths/articles/popular/get.yaml'
   /auth/register:
     post:
       $ref: '../src/swagger/paths/auth/register/post.yaml'
@@ -45,6 +45,9 @@ paths:
   /users:
     get:
       $ref: '../src/swagger/paths/users/get.yaml'
+  /users/popular:
+    get:
+      $ref: '../src/swagger/paths/users/popular/get.yaml'
   /users/{userId}:
     get:
       $ref: '../src/swagger/paths/users/{id}/get.yaml'
@@ -55,9 +58,6 @@ paths:
       $ref: '../src/swagger/paths/users/{id}/saveArticles/post.yaml'
     delete:
       $ref: '../src/swagger/paths/users/{id}/saveArticles/delete.yaml'
-  /users/popular:
-    get:
-      $ref: '../src/swagger/paths/users/popular/get.yaml'
 components:
   securitySchemes:
     bearerAuth:
