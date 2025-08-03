@@ -1,7 +1,7 @@
 import { getUserByIdService } from '../../services/users/getUserByIdService.js';
 import { cleanUser } from '../../utils/cleanUser.js';
 import { getUserContent } from '../../utils/getUserContent.js';
-export const getUserByIdController = async (req, res, next) => {
+export const getUserByIdController = async (req, res) => {
   const { userId } = req.params;
 
   const user = await getUserByIdService(userId);

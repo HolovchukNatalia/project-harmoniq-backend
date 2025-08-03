@@ -5,6 +5,11 @@ import { getUserContent } from '../../utils/getUserContent.js';
 
 export const refreshSessionController = async (req, res) => {
   const { sessionId, sessionToken } = req.cookies;
+
+  if (!sessionId || !sessionToken) {
+    return res.status(401).json({ status: 401, message: 'Unauthorized' });
+  }
+
   const { session, user } = await refreshSession(sessionId, sessionToken);
 
   setSecureCookie(res, 'sessionId', session.id, {
