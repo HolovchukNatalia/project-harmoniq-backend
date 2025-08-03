@@ -1,7 +1,12 @@
 import { getPopularArticlesService } from '../../services/articles/getPopularArticlesService.js';
 
 export const getPopularArticlesController = async (req, res, next) => {
-  const limit = parseInt(req.query.limit, 10) || 5;
+  let limit = parseInt(req.query.limit, 10);
+
+  if (isNaN(limit) || limit <= 0) {
+    limit = 5;
+  }
+
   const articles = await getPopularArticlesService(limit);
 
   res.status(200).json({

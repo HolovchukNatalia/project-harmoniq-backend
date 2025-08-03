@@ -7,6 +7,7 @@ import { loginUserSchema } from '../validation/loginUserSchema.js';
 import { loginUserController } from '../controllers/auth/loginUserController.js';
 import { logoutUserController } from '../controllers/auth/logoutUserController.js';
 import { refreshSessionController } from '../controllers/auth/refreshSessionController.js';
+import { authenticate } from '../middlewares/authenticate.js';
 
 const router = express.Router();
 
@@ -21,7 +22,9 @@ router.post(
   validateBody(loginUserSchema),
   ctrlWrapper(loginUserController),
 );
-router.post('/logout', ctrlWrapper(logoutUserController));
-router.post('/refresh', ctrlWrapper(refreshSessionController));
+
+// Приватні маршрути
+router.post('/logout', authenticate, ctrlWrapper(logoutUserController));
+router.post('/refresh', authenticate, ctrlWrapper(refreshSessionController));
 
 export default router;

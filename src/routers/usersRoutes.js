@@ -15,12 +15,12 @@ import { deleteArticleFromUserController } from '../controllers/users/deleteArti
 const upload = multer({ dest: 'uploads/' });
 
 const router = Router();
-
+// Публічні маршрути
 router.get('/', ctrlWrapper(getUsersAllController));
 router.get('/popular', ctrlWrapper(getPopularUsersController));
-
 router.get('/:userId/', ctrlWrapper(getUserByIdController));
 
+// Приватні маршрути
 router.post(
   '/:userId/save/:articleId',
   authenticate,
