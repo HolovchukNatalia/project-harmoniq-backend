@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import Article from '../../db/models/article.js';
 import { calculatePaginationData } from '../../utils/calculatePaginationData.js';
+import User from '../../db/models/user.js';
 
 export const getAllArticles = async ({ page, perPage, sortMethod }) => {
   const limit = perPage;
@@ -49,6 +50,10 @@ export const getArticleById = async (articleId) => {
 
 export const createArticle = async (payload) => {
   const article = await Article.create(payload);
+  const { ownerId } = payload;
+  const user = await User.findById(ownerId);
+  user.articlesAmount = (user.articlesAmount || 0) + 1;
+  await user.save({ validateBeforeSave: false });
   return article;
 };
 
@@ -57,5 +62,11 @@ export const deleteArticle = async (articleId) => {
     return null;
   }
   const article = await Article.findByIdAndDelete(articleId);
+  console.log('article:', article);
+  const { ownerId } = article;
+  const user = await User.findById(ownerId);
+  user.articlesAmount = (user.articlesAmount || 1) - 1;
+  await user.save({ validateBeforeSave: false });
+
   return article;
 };
