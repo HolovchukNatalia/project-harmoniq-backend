@@ -1,21 +1,29 @@
 import { getUsersAllService } from '../../services/users/getUsersAllService.js';
 
+const allowedFilters = ['all', 'popular'];
+
 export const getUsersAllController = async (req, res) => {
-  const { page = 1, perPage = 20 } = req.query;
-  const pageNum = parseInt(page);
-  const perPageNum = parseInt(perPage);
+  const { filter = 'all' } = req.query;
+  const page = parseInt(req.query.page) || 1;
+  const perPage = parseInt(req.query.perPage) || 10;
+  const limit = req.query.limit ? parseInt(req.query.limit) : null;
+
+  if (!allowedFilters.includes(filter)) {
+    return res
+      .status(400)
+      .json({ status: 400, message: 'Invalid filter parameter' });
+  }
 
   const { users, paginationData } = await getUsersAllService({
-    page: pageNum,
-    perPage: perPageNum,
+    filter,
+    limit,
+    page,
+    perPage,
   });
 
   res.status(200).json({
     status: 200,
-    message: 'Users retrieved successfully',
-    data: {
-      users,
-      paginationData,
-    },
+    message: `Users retrieved successfully with filter: ${filter}`,
+    data: { users, paginationData },
   });
 };

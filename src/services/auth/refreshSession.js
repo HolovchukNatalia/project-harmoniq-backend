@@ -14,7 +14,6 @@ export const refreshSession = async (sessionId, sessionToken) => {
   if (!session) {
     throw createHttpError(401, 'Session not found!');
   }
-
   if (session.refreshTokenValidUntil < new Date()) {
     throw createHttpError(401, 'Session expired');
   }
@@ -24,18 +23,12 @@ export const refreshSession = async (sessionId, sessionToken) => {
     throw createHttpError(404, 'User not found');
   }
 
-  const newTokens = generateSessionTokens();
+  await Session.findByIdAndDelete(session._id);
 
-  const updatedSession = await Session.findOneAndUpdate(
-    { _id: sessionId },
-    {
-      accessToken: newTokens.accessToken,
-      refreshToken: newTokens.refreshToken,
-      accessTokenValidUntil: newTokens.accessTokenValidUntil,
-      refreshTokenValidUntil: newTokens.refreshTokenValidUntil,
-    },
-    { new: true },
-  );
+  const newSession = await Session.create({
+    ...generateSessionTokens(),
+    userId: user._id,
+  });
 
-  return { session: updatedSession, user };
+  return { session: newSession, user };
 };

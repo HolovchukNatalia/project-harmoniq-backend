@@ -1,5 +1,5 @@
 import createHttpError from 'http-errors';
-import { deleteArticle } from '../../services/articles/articlesCRUD.js';
+import { deleteArticle } from '../../services/articles/deleteArticle.js';
 
 export const deleteArticleController = async (req, res) => {
   const { articleId } = req.params;

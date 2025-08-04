@@ -21,8 +21,8 @@ export const deleteArticleFromUserService = async (userId, articleId) => {
   await user.save({ validateBeforeSave: false });
 
   const article = await Article.findById(articleId);
-  if (article && article.rate && article.rate > 0) {
-    article.rate -= 1;
+  if (article) {
+    article.rate = Math.max((article.rate || 0) - 1, 0);
     await article.save({ validateBeforeSave: false });
   }
 };

@@ -1,26 +1,31 @@
 import createHttpError from 'http-errors';
-import { getAllArticles } from '../../services/articles/articlesCRUD.js';
 import { parsePaginationParams } from '../../utils/parsePaginationParams.js';
+import { getAllArticles } from '../../services/articles/getAllArticles.js';
 
-const allowedSortMethods = ['all', 'popular'];
+const allowedFilters = ['all', 'popular'];
 
 export const getArticlesController = async (req, res) => {
-  const { page, perPage } = parsePaginationParams(req.query);
-  const { filter: sortMethod } = req.query;
+  const { filter = 'all' } = req.query;
+  const { page: rawPage, perPage } = parsePaginationParams(req.query);
+  const userLimit = req.query.limit ? Number(req.query.limit) : null;
 
-  if (sortMethod && !allowedSortMethods.includes(sortMethod)) {
+  if (!allowedFilters.includes(filter)) {
     throw createHttpError(400, 'Invalid filter parameter');
   }
 
-  const articles = await getAllArticles({
-    page,
+  const { articles, paginationData } = await getAllArticles({
+    page: rawPage,
     perPage,
-    sortMethod,
+    filter,
+    limit: userLimit,
   });
 
   res.status(200).json({
     status: 200,
-    message: 'Successfully retrieved articles',
-    data: { ...articles },
+    message: `Successfully retrieved ${filter} articles`,
+    data: {
+      articles,
+      pagination: paginationData,
+    },
   });
 };
