@@ -1,7 +1,7 @@
 import { getUsersAllService } from '../../services/users/getUsersAllService.js';
 
 export const getUsersAllController = async (req, res) => {
-  const { page = 1, perPage = 10 } = req.query;
+  const { page = 1, perPage = 20 } = req.query;
   const pageNum = parseInt(page);
   const perPageNum = parseInt(perPage);
 
