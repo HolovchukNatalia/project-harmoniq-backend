@@ -1,7 +1,8 @@
 import createHttpError from 'http-errors';
-import { createArticle } from '../../services/articles/articlesCRUD.js';
+
 import { uploadImageFile } from '../../utils/uploadImageFile.js';
 import { articleSchema } from '../../validation/articleShema.js';
+import { createArticle } from '../../services/articles/getArticleById.js';
 
 export const createArticleController = async (req, res) => {
   const image = await uploadImageFile(req.file);
