@@ -57,11 +57,29 @@
               "type": "integer",
               "example": 5
             }
+          },
+          {
+            "in": "query",
+            "description": "Whether to show the list of most popular articles or just a normal list (default: all)",
+            "name": "filter",
+            "schema": {
+              "type": "string",
+              "example": "popular"
+            }
+          },
+          {
+            "in": "query",
+            "description": "How much of articles should be shown at a time",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "example": 5
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Successfully retrieved articles",
+            "description": "Successfully retrieved {filter} articles",
             "content": {
               "application/json": {
                 "schema": {
@@ -79,7 +97,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully retrieved articles"
+                      "example": "Successfully retrieved all articles"
                     },
                     "data": {
                       "type": "object",
@@ -215,68 +233,6 @@
           },
           "401": {
             "$ref": "#/components/responses/401"
-          }
-        }
-      }
-    },
-    "/articles/popular": {
-      "get": {
-        "tags": [
-          "Articles"
-        ],
-        "summary": "Get a list of most popular articles",
-        "operationId": "getPopularArticlesService",
-        "description": "Get a list of most popular articles",
-        "security": [],
-        "parameters": [
-          {
-            "in": "query",
-            "description": "How much popular articles should be shown",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "type": "number",
-              "default": 5,
-              "example": 10
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Top {limit} popular articles",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Top 5 popular articles"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "articles": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/article"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       }
@@ -847,9 +803,45 @@
         "operationId": "allUsersInfoService",
         "description": "Get a whole list of all users with this endpoint",
         "security": [],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          },
+          {
+            "in": "query",
+            "name": "perPage",
+            "schema": {
+              "type": "integer",
+              "example": 5
+            }
+          },
+          {
+            "in": "query",
+            "description": "Whether to show the list of most popular users or just a normal list (default: all)",
+            "name": "filter",
+            "schema": {
+              "type": "string",
+              "example": "popular"
+            }
+          },
+          {
+            "in": "query",
+            "description": "How much of users should be shown at a time",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "example": 5
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Users retrieved successfully",
+            "description": "Users retrieved successfully with filter: {filter}",
             "content": {
               "application/json": {
                 "schema": {
@@ -867,7 +859,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Users retrieved successfully"
+                      "example": "Users retrieved successfully with filter: {filter}"
                     },
                     "data": {
                       "type": "object",
@@ -883,68 +875,6 @@
                     "paginationData": {
                       "type": "object",
                       "$ref": "#/components/schemas/pagination"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/popular": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "summary": "Get a list of most popular users",
-        "operationId": "getPopularUsers",
-        "description": "Get a list of most popular articles by articlesAmount",
-        "security": [],
-        "parameters": [
-          {
-            "in": "query",
-            "description": "How much popular users should be shown",
-            "name": "limit",
-            "required": false,
-            "schema": {
-              "type": "number",
-              "default": 5,
-              "example": 10
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Top {limit} users sorted by articlesAmount",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Top 5 users sorted by articlesAmount"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "users": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/user"
-                          }
-                        }
-                      }
                     }
                   }
                 }

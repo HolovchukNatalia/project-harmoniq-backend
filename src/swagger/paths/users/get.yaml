@@ -4,9 +4,32 @@ summary: Get a whole list of users
 operationId: allUsersInfoService
 description: 'Get a whole list of all users with this endpoint'
 security: []
+parameters:
+  - in: query
+    name: page
+    schema:
+      type: integer
+    example: 1
+  - in: query
+    name: perPage
+    schema:
+      type: integer
+      example: 5
+  - in: query
+    description: 'Whether to show the list of most popular users or just a normal list (default: all)'
+    name: filter
+    schema:
+      type: string
+      example: popular
+  - in: query
+    description: 'How much of users should be shown at a time'
+    name: limit
+    schema:
+      type: integer
+      example: 5
 responses:
   '200':
-    description: 'Users retrieved successfully'
+    description: 'Users retrieved successfully with filter: {filter}'
     content:
       application/json:
         schema:
@@ -22,7 +45,7 @@ responses:
               example: 200
             message:
               type: string
-              example: Users retrieved successfully
+              example: 'Users retrieved successfully with filter: {filter}'
             data:
               type: object
               properties:
