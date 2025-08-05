@@ -22,9 +22,6 @@ paths:
       $ref: '../src/swagger/paths/articles/get.yaml'
     post:
       $ref: '../src/swagger/paths/articles/post.yaml'
-  /articles/popular:
-    get:
-      $ref: '../src/swagger/paths/articles/popular/get.yaml'
   /articles/{articleId}:
     get:
       $ref: '../src/swagger/paths/articles/{id}/get.yaml'
@@ -45,9 +42,6 @@ paths:
   /users:
     get:
       $ref: '../src/swagger/paths/users/get.yaml'
-  /users/popular:
-    get:
-      $ref: '../src/swagger/paths/users/popular/get.yaml'
   /users/{userId}:
     get:
       $ref: '../src/swagger/paths/users/{id}/get.yaml'
