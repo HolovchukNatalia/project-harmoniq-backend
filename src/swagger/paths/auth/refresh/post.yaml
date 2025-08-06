@@ -46,4 +46,4 @@ responses:
               example: 401
             message:
               type: string
-              example: 'Session not found!'
+              example: 'Unauthorized'
