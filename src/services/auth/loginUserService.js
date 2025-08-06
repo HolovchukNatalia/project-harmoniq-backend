@@ -7,6 +7,7 @@ import Session from '../../db/models/session.js';
 import { generateSessionTokens } from '../../utils/generateSessionTokens.js';
 
 export const loginUser = async (payload) => {
+  console.log('payload:', payload);
   const user = await User.findOne({ email: payload.email });
   if (!user) {
     throw createHttpError(401, 'User or password doesn`t match');
@@ -20,12 +21,20 @@ export const loginUser = async (payload) => {
     throw createHttpError(401, 'User or password doesn`t match');
   }
 
-  await Session.findOneAndDelete({ userId: user._id });
+  const existingSession = await Session.findOne({ userId: user._id });
+  const now = new Date();
 
-  const session = await Session.create({
-    ...generateSessionTokens(),
-    userId: user._id,
-  });
+  if (existingSession && existingSession.refreshTokenValidUntil > now) {
+    const newTokens = generateSessionTokens();
+    await Session.findByIdAndUpdate(existingSession._id, { ...newTokens });
 
-  return { session, user };
+    const updatedSession = await Session.findById(existingSession._id);
+    return { session: updatedSession, user };
+  } else {
+    const session = await Session.create({
+      ...generateSessionTokens(),
+      userId: user._id,
+    });
+    return { session, user };
+  }
 };

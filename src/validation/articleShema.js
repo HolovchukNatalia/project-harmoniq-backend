@@ -10,17 +10,21 @@ export const articleSchema = Joi.object({
   title: Joi.string().min(5).max(100).required().messages({
     'any.required': 'Title is required',
     'string.min': 'Title must be at least 5 characters long',
-    'string.max': 'Title must not exceed 120 characters',
+    'string.max': 'Title must not exceed 100 characters',
   }),
 
-  desc: Joi.string().min(5).required().max(100),
+  desc: Joi.string().min(5).max(100).required().messages({
+    'any.required': 'Description is required',
+    'string.min': 'Description must be at least 5 characters long',
+    'string.max': 'Description must not exceed 100 characters',
+  }),
 
   article: Joi.string().min(100).required().messages({
     'any.required': 'Text is required',
     'string.min': 'Text must be at least 100 characters long',
   }),
 
-  rate: Joi.number().default(0),
+  rate: Joi.number().min(0).default(0),
 
   ownerId: Joi.string()
     .custom((value, helpers) => {
