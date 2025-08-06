@@ -1,37 +1,25 @@
 import { refreshSession } from '../../services/auth/refreshSession.js';
-import { cleanUser } from '../../utils/cleanUser.js';
 import { setSecureCookie } from '../../utils/cookie/setSecureCookie.js';
-import { getUserContent } from '../../utils/getUserContent.js';
 
 export const refreshSessionController = async (req, res) => {
-  const { sessionId, sessionToken } = req.cookies;
+  const { sessionToken } = req.cookies;
 
-  if (!sessionId || !sessionToken) {
+  if (!sessionToken) {
     return res.status(401).json({ status: 401, message: 'Unauthorized' });
   }
 
-  const { session, user } = await refreshSession(sessionId, sessionToken);
+  const { accessToken, refreshToken, refreshTokenValidUntil } =
+    await refreshSession(sessionToken);
 
-  setSecureCookie(res, 'sessionId', session.id, {
-    expires: session.refreshTokenValidUntil,
-  });
-  setSecureCookie(res, 'sessionToken', session.refreshToken, {
-    expires: session.refreshTokenValidUntil,
+  setSecureCookie(res, 'sessionToken', refreshToken, {
+    expires: new Date(refreshTokenValidUntil),
   });
 
-  const cleanedUser = cleanUser(user);
-  const { userArticles, savedArticles } = await getUserContent(
-    user._id,
-    user.saved,
-  );
   res.json({
     status: 200,
     message: 'Successfully refreshed a session!',
     data: {
-      accessToken: session.accessToken,
-      user: cleanedUser,
-      userArticles,
-      savedArticles,
+      accessToken: accessToken,
     },
   });
 };

@@ -1,15 +1,9 @@
 import createHttpError from 'http-errors';
-
 import Session from '../../db/models/session.js';
-import User from '../../db/models/user.js';
-
 import { generateSessionTokens } from '../../utils/generateSessionTokens.js';
 
-export const refreshSession = async (sessionId, sessionToken) => {
-  const session = await Session.findOne({
-    _id: sessionId,
-    refreshToken: sessionToken,
-  });
+export const refreshSession = async (refreshToken) => {
+  const session = await Session.findOne({ refreshToken });
 
   if (!session) {
     throw createHttpError(401, 'Session not found!');
@@ -18,17 +12,14 @@ export const refreshSession = async (sessionId, sessionToken) => {
     throw createHttpError(401, 'Session expired');
   }
 
-  const user = await User.findById(session.userId);
-  if (!user) {
-    throw createHttpError(404, 'User not found');
-  }
+  const newTokens = generateSessionTokens();
 
-  await Session.findByIdAndDelete(session._id);
+  await Session.findOneAndUpdate({ _id: session._id }, { ...newTokens });
 
-  const newSession = await Session.create({
-    ...generateSessionTokens(),
-    userId: user._id,
-  });
-
-  return { session: newSession, user };
+  return {
+    accessToken: newTokens.accessToken,
+    refreshToken: newTokens.refreshToken,
+    accessTokenValidUntil: newTokens.accessTokenValidUntil,
+    refreshTokenValidUntil: newTokens.refreshTokenValidUntil,
+  };
 };

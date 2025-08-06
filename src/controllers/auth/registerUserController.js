@@ -1,7 +1,7 @@
 import createHttpError from 'http-errors';
 import { registerUserService } from '../../services/auth/registerUserService.js';
 import { cleanUser } from '../../utils/cleanUser.js';
-import { hashPassword } from '../../utils/hashPassword.js';
+import { setSecureCookie } from '../../utils/cookie/setSecureCookie.js';
 
 export const registerUserController = async (req, res) => {
   const { name, email, password } = req.body;
@@ -10,23 +10,22 @@ export const registerUserController = async (req, res) => {
     throw createHttpError(400, 'Missing required fields');
   }
 
-  const hashedPassword = await hashPassword(password);
-
-  const user = await registerUserService({
+  const { user, session } = await registerUserService({
     name,
     email,
-    password: hashedPassword,
+    password,
   });
 
-  if (!user) {
-    throw createHttpError(409, 'Email in use');
-  }
-
-  const cleanedUser = cleanUser(user);
+  setSecureCookie(res, 'sessionToken', session.refreshToken, {
+    expires: new Date(session.refreshTokenValidUntil),
+  });
 
   res.status(201).json({
     status: 201,
     message: 'Successfully registered a user!',
-    data: { user: cleanedUser },
+    data: {
+      accessToken: session.accessToken,
+      user: cleanUser(user),
+    },
   });
 };
