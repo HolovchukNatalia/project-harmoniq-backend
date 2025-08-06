@@ -46,6 +46,7 @@ requestBody:
           rate:
             description: "Article's rating"
             type: number
+            minLength: 0
             default: 0
             example: 16
           date:

@@ -180,6 +180,7 @@
                   "rate": {
                     "description": "Article's rating",
                     "type": "number",
+                    "minLength": 0,
                     "default": 0,
                     "example": 16
                   },
@@ -451,7 +452,17 @@
                       "example": "Successfully registered a user!"
                     },
                     "data": {
-                      "$ref": "#/components/schemas/auth"
+                      "type": "object",
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "example": "Bearer token_string"
+                        },
+                        "user": {
+                          "type": "object",
+                          "$ref": "#/components/schemas/user"
+                        }
+                      }
                     }
                   }
                 }
@@ -548,7 +559,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successfully logged in an user!",
+            "description": "Successfully logged in!",
             "content": {
               "application/json": {
                 "schema": {
@@ -565,16 +576,10 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Successfully logged in an user!"
+                      "example": "Successfully logged in!"
                     },
                     "data": {
                       "type": "object",
-                      "required": [
-                        "accessToken",
-                        "user",
-                        "userArticles",
-                        "savedArticles"
-                      ],
                       "properties": {
                         "accessToken": {
                           "type": "string",
@@ -583,18 +588,6 @@
                         "user": {
                           "type": "object",
                           "$ref": "#/components/schemas/user"
-                        },
-                        "userArticles": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/article"
-                          }
-                        },
-                        "savedArticles": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/article"
-                          }
                         }
                       }
                     }
@@ -784,7 +777,7 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Session not found!"
+                      "example": "Unauthorized"
                     }
                   }
                 }
@@ -1455,31 +1448,6 @@
             "description": "Article owner's id",
             "type": "string",
             "example": "68855485f76d12b4e7384005"
-          }
-        }
-      },
-      "auth": {
-        "type": "object",
-        "required": [
-          "id",
-          "name",
-          "email"
-        ],
-        "properties": {
-          "id": {
-            "description": "User's Id",
-            "type": "string",
-            "example": "6885f9804c4583960e7188e7"
-          },
-          "name": {
-            "description": "User's name",
-            "type": "string",
-            "example": "User228"
-          },
-          "email": {
-            "description": "User's email",
-            "type": "string",
-            "example": "user@example.com"
           }
         }
       },

@@ -29,7 +29,7 @@ requestBody:
             example: 'password123'
 responses:
   '200':
-    description: 'Successfully logged in an user!'
+    description: 'Successfully logged in!'
     content:
       application/json:
         schema:
@@ -44,14 +44,9 @@ responses:
               example: 200
             message:
               type: string
-              example: 'Successfully logged in an user!'
+              example: 'Successfully logged in!'
             data:
               type: object
-              required:
-                - accessToken
-                - user
-                - userArticles
-                - savedArticles
               properties:
                 accessToken:
                   type: string
@@ -59,14 +54,6 @@ responses:
                 user:
                   type: object
                   $ref: '../../../components/schemas/user.yaml'
-                userArticles:
-                  type: array
-                  items:
-                    $ref: '../../../components/schemas/article.yaml'
-                savedArticles:
-                  type: array
-                  items:
-                    $ref: '../../../components/schemas/article.yaml'
   '400':
     description: Validation error
     content:

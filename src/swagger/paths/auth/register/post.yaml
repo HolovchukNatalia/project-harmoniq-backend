@@ -53,7 +53,14 @@ responses:
               type: string
               example: Successfully registered a user!
             data:
-              $ref: ../../../components/schemas/auth.yaml
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                  example: 'Bearer token_string'
+                user:
+                  type: object
+                  $ref: '../../../components/schemas/user.yaml'
   '400':
     description: Validation error
     content:
